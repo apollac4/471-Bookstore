@@ -17,6 +17,7 @@
 
 	function manage(title, author, price){
 		var shoppingCart = [title, author, price];
+		window.location.href="shopping_cart.php?shoppingCart="+shoppingCart;
 	}
 	//write another function that when click addToCart, add values to the array.
 	</script>
