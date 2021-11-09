@@ -27,10 +27,10 @@ $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http
 $url_components = parse_url($url);
 parse_str($url_components['query'], $params);
      
-// Display result
 $book1 = $params['shoppingCart'];
+echo $book1;
 $book_arr = (explode(",",$book1));
-echo $book_arr[0];
+print_r($book_arr);
 ?>
 
 	<table align="center" style="border:2px solid blue;">
@@ -62,14 +62,14 @@ echo $book_arr[0];
 								<?php echo "<button name='delete' id='delete' onClick='del($book_arr[0]);return false;'>Delete Item</button>"
 							?>
 							</td>
-							<td> <?php echo  $book_arr[0]; ?>
+							<td> <?php echo  $book_arr[1]; ?>
 							</br>
-							<b>By</b> <?php echo  $book_arr[1]; ?></br>
+							<b>By</b> <?php echo  $book_arr[2]; ?></br>
 						</td>
 						<td>
 							<input id='txt123441' name='txt123441' value='1' size='1' />
 						</td>
-						<td> <?php echo $book_arr[2] ?></td>
+						<td> <?php echo $book_arr[3] ?></td>
 					</tr>					
 						</table>
 				</div>
@@ -84,7 +84,7 @@ echo $book_arr[0];
 				&nbsp;
 			</td>
 			<td align="center">			
-				Subtotal: <?php echo $book_arr[2] ?>			</td>
+				Subtotal: <?php echo $book_arr[3] ?>			</td>
 		</tr>
 	</table>
 </body>
