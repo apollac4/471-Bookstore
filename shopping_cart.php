@@ -4,8 +4,8 @@
 	<title>Shopping Cart</title>
 	<script>
 	//remove from cart
-	function del(isbn){
-		window.location.href="shopping_cart.php?delIsbn="+ isbn;
+	function del(title){
+		window.location.href="shopping_cart.php?delIsbn="+ title;
 	}
 	</script>
 </head>
@@ -23,10 +23,14 @@ if (mysqli_connect_errno()) {
   echo $db->error;
 }
 
-$que = "SELECT * FROM book";
-// $que = "SELECT * FROM book WHERE ISBN = '" . $_GET["isbn"] . "'";
-
-$result = mysqli_query($db, $que);
+$url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+$url_components = parse_url($url);
+parse_str($url_components['query'], $params);
+     
+// Display result
+$book1 = $params['shoppingCart'];
+$book_arr = (explode(",",$book1));
+echo $book_arr[0];
 
 ?>
 
@@ -54,10 +58,21 @@ $result = mysqli_query($db, $que);
 				<div id="bookdetails" style="overflow:scroll;height:180px;width:400px;border:1px solid black;">
 					<table align="center" BORDER="2" CELLPADDING="2" CELLSPACING="2" WIDTH="100%">
 						<th width='10%'>Remove</th><th width='60%'>Book Description</th><th width='10%'>Qty</th><th width='10%'>Price</th>
-						<?php
-
-						?>
-						<tr><td><button name='delete' id='delete' onClick='del("123441");return false;'>Delete Item</button></td><td>iuhdf</br><b>By</b> Avi Silberschatz</br></td><td><input id='txt123441' name='txt123441' value='1' size='1' /></td><td>12.99</td></tr>					</table>
+						<tr>
+							<td>
+								<?php echo "<button name='delete' id='delete' onClick='del($book_arr[0]);return false;'>Delete Item</button>"
+							?>
+							</td>
+							<td> <?php echo  $book_arr[0]; ?>
+							</br>
+							<b>By</b> <?php echo  $book_arr[1]; ?></br>
+						</td>
+						<td>
+							<input id='txt123441' name='txt123441' value='1' size='1' />
+						</td>
+						<td> <?php echo $book_arr[2] ?></td>
+					</tr>					
+						</table>
 				</div>
 			</td>
 		</tr>
@@ -70,7 +85,7 @@ $result = mysqli_query($db, $que);
 				&nbsp;
 			</td>
 			<td align="center">			
-				Subtotal:  $12.99			</td>
+				Subtotal: <?php echo $book_arr[2] ?>			</td>
 		</tr>
 	</table>
 </body>
