@@ -31,7 +31,6 @@ parse_str($url_components['query'], $params);
 $book1 = $params['shoppingCart'];
 $book_arr = (explode(",",$book1));
 echo $book_arr[0];
-
 ?>
 
 	<table align="center" style="border:2px solid blue;">

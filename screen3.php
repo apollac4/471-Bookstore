@@ -4,6 +4,9 @@
 <head>
 	<title> Search Result - 3-B.com </title>
 	<script>
+
+	var shoppingCart = [];
+
 	//redirect to reviews page
 	function review(isbn, title){
 		window.location.href="screen4.php?isbn="+ isbn + "&title=" + title;
@@ -15,11 +18,8 @@
 		// onClick='cart(\"" . $row["ISBN"] . "\", \"" . $_GET["searchfor"] . "\", \"" . $_GET["searchon"][0] . "\", \"" . $_GET["category"] . "\")'>
 	} 
 
-	function manage(title, author, price){
-		var shoppingCart = [title, author, price];
-		window.location.href="shopping_cart.php?shoppingCart="+shoppingCart;
-	}
-	//write another function that when click addToCart, add values to the array.
+
+	
 	</script>
 </head>
 <body>
@@ -77,22 +77,19 @@ if($_GET['category'] == 3){
 if($_GET['category'] == 4){
 	$que .= " AND book.genre = 'Horror'";
 }
-echo $que;
 ?>
 
 
 <table align="center" style="border:1px solid blue;">
 <tr>
 	<td align="left">
-		<h6> <fieldset>Your Shopping Cart has 0 items</fieldset> </h6>
+		<h6 id="cartItems">  </h6>
 	</td>
 	<td>
 		&nbsp
 	</td>
 	<td align="right">
-		<form action="shopping_cart.php" method="post">
-			<input type="submit" value="Manage Shopping Cart">
-		</form>
+		<input type="submit" value="Manage Shopping Cart" onclick="manage()">
 	</td>
 </tr>	
 <tr>
@@ -107,7 +104,7 @@ if(strcmp($que, "") != 0){
 	if ($res->num_rows > 0) {
 		while($row = $res->fetch_assoc()) {
 			echo "<tr><td align='left'><button name='btnCart' id='btnCart' 
-			onClick='manage(\"" . $row["Title"] . "\", \"" . $row["Fname"] . " " . $row["Lname"] . "\", \"" . $row["Price"] . "\")'> 
+			onClick='addToCart(\"" . $row["ISBN"]  . "\", \"" . $row["Title"] . "\", \"" . $row["Fname"] . " " . $row["Lname"] . "\", \"" . $row["Price"] . "\")'> 
 			Add to Cart </button></td><td rowspan='2' align='left'>" . $row["Title"] . "</br>By " . $row["Fname"] . $row["Lname"] . "</br><b>Publisher:</b> " . $row["Name"] . " </br><b>ISBN:</b> " . $row["ISBN"] . "</t> <b>Price:</b> " . $row["Price"] . "</td></tr><tr><td align='left'><button name='review' id='review' onClick='review(\"" . $row["ISBN"] . "\", \"" . $row["Title"] . "\")'>Reviews</button></td></tr>";
 		}
 	} else {
@@ -138,4 +135,18 @@ if(strcmp($que, "") != 0){
 		</tr>
 	</table>
 </body>
+<script>
+document.getElementById("cartItems").innerHTML = "You have " + shoppingCart.length + " items in your cart.";
+
+	//Add item to cart array and total cart amount
+	function addToCart(ISBN, title, author, price){
+		shoppingCart.push([ISBN, title, author, price]);
+		console.log(shoppingCart);
+		document.getElementById("cartItems").innerHTML = "You have " + shoppingCart.length + " items in your cart.";
+	}
+
+	function manage(){
+		window.location.href="shopping_cart.php?shoppingCart="+shoppingCart;
+	}
+</script>
 </html>
