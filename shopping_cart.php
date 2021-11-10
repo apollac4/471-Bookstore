@@ -28,9 +28,9 @@ $url_components = parse_url($url);
 parse_str($url_components['query'], $params);
      
 $book1 = $params['shoppingCart'];
-echo $book1;
+
 $book_arr = (explode(",",$book1));
-print_r($book_arr);
+
 ?>
 
 	<table align="center" style="border:2px solid blue;">
@@ -51,30 +51,36 @@ print_r($book_arr);
 				</form>					
 			</td>
 		</tr>
+
 		<tr>
 				<form id="recalculate" name="recalculate" action="" method="post">
-			<td  colspan="3">
-				<div id="bookdetails" style="overflow:scroll;height:180px;width:400px;border:1px solid black;">
-					<table align="center" BORDER="2" CELLPADDING="2" CELLSPACING="2" WIDTH="100%">
-						<th width='10%'>Remove</th><th width='60%'>Book Description</th><th width='10%'>Qty</th><th width='10%'>Price</th>
-						<tr>
-							<td>
-								<?php echo "<button name='delete' id='delete' onClick='del($book_arr[0]);return false;'>Delete Item</button>"
-							?>
-							</td>
-							<td> <?php echo  $book_arr[1]; ?>
-							</br>
-							<b>By</b> <?php echo  $book_arr[2]; ?></br>
-						</td>
-						<td>
-							<input id='txt123441' name='txt123441' value='1' size='1' />
-						</td>
-						<td> <?php echo $book_arr[3] ?></td>
-					</tr>					
-						</table>
+
+			<td  colspan='3'>
+			<div id='bookdetails' style='overflow:scroll;height:180px;width:400px;border:1px solid black;'>
+			<table align='center' BORDER='2' CELLPADDING='2' CELLSPACING='2' WIDTH='100%'>
+			<?php
+			if(count($book_arr) > 1){
+			for ($x = 0; $x < count($book_arr); $x+=4) {
+			echo			"<th width='10%'>Remove</th><th width='60%'>Book Description</th><th width='10%'>Qty</th><th width='10%'>Price</th>";
+									echo "<tr>";
+									echo "<td><button name='delete' id='delete' onClick='del($book_arr[$x]);return false;'>Delete Item</button></td>";
+									echo "<td>" . $book_arr[$x+1] . "</br><b>By</b> " . $book_arr[$x+2] . "</br></td>";
+									echo "</br>";
+									echo "<td>";
+									echo "<input id='txt123441' name='txt123441' value='1' size='1' />";
+									echo "</td>";
+								    echo "<td class='price'>" . $book_arr[$x+3] .  "</td>";
+									echo "<td></td>";
+									echo "</tr>";
+								}
+							}
+								?>
+				</table>
 				</div>
-			</td>
+				</td>
+
 		</tr>
+
 		<tr>
 			<td align="center">				
 					<input type="submit" name="recalculate_payment" id="recalculate_payment" value="Recalculate Payment">
@@ -83,8 +89,20 @@ print_r($book_arr);
 			<td align="center">
 				&nbsp;
 			</td>
-			<td align="center">			
-				Subtotal: <?php echo $book_arr[3] ?>			</td>
+			<td align="center" id="total"></td>
 		</tr>
 	</table>
 </body>
+<script>
+
+function calculateSubtotal(){
+	var total = 0;
+	var books = document.getElementsByClassName("price");
+	for(var i = 0; i < books.length; i++){
+		console.log(books[i].innerHTML);
+		total += parseFloat(books[i].innerHTML);
+	}
+	document.getElementById("total").innerHTML = "Subtotal: " + total;
+}
+calculateSubtotal();
+</script>
