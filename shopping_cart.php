@@ -2,12 +2,6 @@
 <!DOCTYPE HTML>
 <head>
 	<title>Shopping Cart</title>
-	<script>
-	//remove from cart
-	function del(title){
-		window.location.href="shopping_cart.php?delIsbn="+ title;
-	}
-	</script>
 </head>
 <body>
 
@@ -28,8 +22,8 @@ $url_components = parse_url($url);
 parse_str($url_components['query'], $params);
      
 $book1 = $params['shoppingCart'];
-
 $book_arr = (explode(",",$book1));
+print_r($book_arr);
 
 ?>
 
@@ -105,4 +99,23 @@ function calculateSubtotal(){
 	document.getElementById("total").innerHTML = "Subtotal: " + total;
 }
 calculateSubtotal();
+
+function del(isbn){
+		var passedArray = <?php echo json_encode($book_arr); ?>;
+		var urlArray = "";
+		for(var i = 0; i < passedArray.length; i++){
+			if (passedArray[i]==isbn){
+				passedArray.splice(i, 4);
+			}
+		}
+		for(var j = 0; j < passedArray.length; j++){
+			if (j < passedArray.length - 1){
+				urlArray+=passedArray[j]+",";
+			}
+    		else {
+				urlArray+=passedArray[j];
+			}
+		}
+		window.location.href="shopping_cart.php?shoppingCart="+urlArray;
+	}
 </script>
