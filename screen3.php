@@ -103,8 +103,7 @@ if(strcmp($que, "") != 0){
 	if ($res==null) echo "<p>nothing returned</p>";//error checking
 	if ($res->num_rows > 0) {
 		while($row = $res->fetch_assoc()) {
-			echo "<tr><td align='left'><button name='btnCart' id='btnCart' 
-			onClick='addToCart(\"" . $row["ISBN"]  . "\", \"" . $row["Title"] . "\", \"" . $row["Fname"] . " " . $row["Lname"] . "\", \"" . $row["Price"] . "\")'> 
+			echo "<tr><td align='left'><button name='btnCart' id='btnCart" . $row["ISBN"] . "' onClick='addToCart(\"" . $row["ISBN"]  . "\", \"" . $row["Title"] . "\", \"" . $row["Fname"] . " " . $row["Lname"] . "\", \"" . $row["Price"] . "\")'> 
 			Add to Cart </button></td><td rowspan='2' align='left'>" . $row["Title"] . "</br>By " . $row["Fname"] . $row["Lname"] . "</br><b>Publisher:</b> " . $row["Name"] . " </br><b>ISBN:</b> " . $row["ISBN"] . "</t> <b>Price:</b> " . $row["Price"] . "</td></tr><tr><td align='left'><button name='review' id='review' onClick='review(\"" . $row["ISBN"] . "\", \"" . $row["Title"] . "\")'>Reviews</button></td></tr>";
 		}
 	} else {
@@ -143,6 +142,8 @@ document.getElementById("cartItems").innerHTML = "You have " + shoppingCart.leng
 		shoppingCart.push([ISBN, title, author, price]);
 		console.log(shoppingCart);
 		document.getElementById("cartItems").innerHTML = "You have " + shoppingCart.length + " items in your cart.";
+		//Disable button
+		document.getElementById("btnCart" + ISBN).disabled = true;
 	}
 
 	function manage(){
