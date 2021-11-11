@@ -5,9 +5,24 @@
 	<title> Search Result - 3-B.com </title>
 	<script>
 
-	var shoppingCart = [];
+	var shoppingCart = "<?php echo $_GET['shoppingcart']; ?>"; 
 
-
+	//Check value of shopping cart and convert to array
+	if(shoppingCart == "empty" | shoppingCart == '') { 
+		shoppingCart = []
+	} else {
+		shoppingCart = shoppingCart.split(",");
+		var tempCart = [];
+		for(i = 0; i < shoppingCart.length; i+=4){
+			var temp = [];
+			temp[0] = shoppingCart[i];
+			temp[1] = shoppingCart[i+1];
+			temp[2] = shoppingCart[i+2];
+			temp[3] = shoppingCart[i+3];
+			tempCart.push(temp);
+		}
+		shoppingCart = tempCart;
+	}
 	//add to cart
 	function cart(isbn, searchfor, searchon, category){
 		window.location.href="screen3.php?cartisbn="+ isbn + "&searchfor=" + searchfor + "&searchon=" + searchon + "&category=" + category;
@@ -150,10 +165,11 @@ document.getElementById("cartItems").innerHTML = "You have " + shoppingCart.leng
 	var searchfor = "<?php echo $_GET['searchfor']; ?>"; 
 	var category = "<?php echo $_GET['category']; ?>";
 	var searchon = "<?php echo $_GET['searchon']; ?>";
+
 	//redirect to reviews page
 	function review(isbn, title){
 		window.location.href="screen4.php?isbn="+ isbn + "&title=" + title + "&searchfor=" + searchfor 
-		+ "&category=" + category + "&searchon=" + searchon;
+		+ "&category=" + category + "&searchon=" + searchon + "&shoppingcart=" + shoppingCart;
 	}
 </script>
 </html>

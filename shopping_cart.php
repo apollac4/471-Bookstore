@@ -35,9 +35,7 @@ print_r($book_arr);
 				</form>
 			</td>
 			<td align="center">
-				<form id="new_search" action="screen2.php" method="post">
-					<input type="submit" name="search" id="search" value="New Search">
-				</form>								
+				<input type="submit" onClick='newSearch()' name="search" id="search" value="New Search">							
 			</td>
 			<td align="center">
 				<form id="exit" action="index.php" method="post">
@@ -88,6 +86,11 @@ print_r($book_arr);
 	</table>
 </body>
 <script>
+var shoppingCart = "<?php echo $_GET["shoppingCart"]; ?>";
+
+function newSearch(){
+	window.location.href="screen2.php?shoppingcart=" + shoppingCart;
+}
 
 function calculateSubtotal(){
 	var total = 0;

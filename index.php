@@ -5,7 +5,7 @@
 	<tr><td><h2>Best Book Buy (3-B.com)</h2></td></tr>
 	<tr><td><h4>Online Bookstore</h4></td></tr>
 	<tr><td><form action="" method="post">
-		<input type="radio" name="group1" value="SearchCat.php" onclick="document.location.href='screen2.php'">Search Online<br/>
+		<input type="radio" name="group1" value="SearchCat.php" onclick=toSearch()>Search Online<br/>
 		<input type="radio" name="group1" value="customer_registration.php" onclick="document.location.href='customer_registration.php'">New Customer<br/>
 		<input type="radio" name="group1" value="user_login.php" onclick="document.location.href='user_login.php'">Returning Customer<br/>
 		<input type="radio" name="group1" value="admin_login.php" onclick="document.location.href='admin_login.php'">Administrator<br/>
@@ -13,4 +13,10 @@
 	</form></td></tr>
 	</table>
 </body>
+<script>
+	var shoppingCart = "empty";
+	function toSearch(){
+		window.location.href="screen2.php?shoppingcart=" + shoppingCart;
+	}
+</script>
 </html

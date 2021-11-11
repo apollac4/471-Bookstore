@@ -8,14 +8,13 @@
 	<table align="center" style="border:1px solid blue;">
 		<tr>
 			<td>Search for: </td>
-			<form action="screen3.php" method="get">
-				<td><input name="searchfor" /></td>
-				<td><input type="submit" name="search" value="Search" /></td>
+				<td><input id="searchfor" name="searchfor" /></td>
+				<td><input type="submit" name="search" value="Search" onclick="toResults()"/></td>
 		</tr>
 		<tr>
 			<td>Search In: </td>
 				<td>
-					<select name="searchon" multiple>
+					<select id="searchon" name="searchon" multiple>
 						<option value="anywhere" selected='selected'>Keyword anywhere</option>
 						<option value="title">Title</option>
 						<option value="author">Author</option>
@@ -27,14 +26,29 @@
 		</tr>
 		<tr>
 			<td>Category: </td>
-				<td><select name="category">
+				<td><select id="category" name="category">
 						<option value='all' selected='selected'>All Categories</option>
 						<option value='1'>Fantasy</option><option value='2'>Adventure</option><option value='3'>Fiction</option><option value='4'>Horror</option>				</select></td>
-				</form>
+				
 	<form action="index.php" method="post">	
 				<td><input type="submit" name="exit" value="EXIT 3-B.com" /></td>
 			</form>
 		</tr>
 	</table>
 </body>
+<script>
+
+var shoppingCart = "<?php echo $_GET['shoppingcart']; ?>";
+
+
+var searchfor = document.getElementById("searchfor").value;
+var category = document.getElementById("category").value;
+var searchon = document.getElementById("searchon").value;
+
+function toResults(){
+	window.location.href="screen3.php?searchfor=" + searchfor + "&category=" + category 
+		+ "&searchon=" + searchon + "&shoppingcart=" + shoppingCart;
+}
+
+</script>
 </html>
