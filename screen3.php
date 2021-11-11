@@ -7,10 +7,7 @@
 
 	var shoppingCart = [];
 
-	//redirect to reviews page
-	function review(isbn, title){
-		window.location.href="screen4.php?isbn="+ isbn + "&title=" + title;
-	}
+
 	//add to cart
 	function cart(isbn, searchfor, searchon, category){
 		window.location.href="screen3.php?cartisbn="+ isbn + "&searchfor=" + searchfor + "&searchon=" + searchon + "&category=" + category;
@@ -37,28 +34,28 @@ if (mysqli_connect_errno()) {
 
 $que = "";
 //Search on title
-if(strcmp($_GET['searchon'][0], 'title') == 0){
+if(strcmp($_GET['searchon'], 'title') == 0){
 	$que = "SELECT * FROM book JOIN writtenby ON book.ISBN = writtenby.ISBN JOIN author ON writtenby.AuthorID = author.ID JOIN workswith ON author.ID = workswith.AuthorID JOIN publisher on workswith.PublisherID = publisher.ID
 	WHERE book.TITLE = " . "'" . $_GET['searchfor'] . "'";
 }
 //Search on author
-if(strcmp($_GET['searchon'][0], 'author') == 0){
+if(strcmp($_GET['searchon'], 'author') == 0){
 	$author = explode(" " , $_GET['searchfor']);
 	$que = "SELECT * FROM book JOIN writtenby ON book.ISBN = writtenby.ISBN JOIN author ON writtenby.AuthorID = author.ID JOIN workswith ON author.ID = workswith.AuthorID JOIN publisher on workswith.PublisherID = publisher.ID
 	WHERE author.Fname = '" .  $author[0] . "' AND "  . "author.Lname = '" . $author[1] . "'";
 }
 //Search on publisher
-if(strcmp($_GET['searchon'][0], 'publisher') == 0){
+if(strcmp($_GET['searchon'], 'publisher') == 0){
 	$que = "SELECT * FROM book JOIN writtenby ON book.ISBN = writtenby.ISBN JOIN author ON writtenby.AuthorID = author.ID JOIN workswith ON author.ID = workswith.AuthorID JOIN publisher on workswith.PublisherID = publisher.ID
 	WHERE publisher.Name = " . "'" . $_GET['searchfor'] . "'";
 }
 //Search on ISBN
-if(strcmp($_GET['searchon'][0], 'keyword') == 0){
+if(strcmp($_GET['searchon'], 'keyword') == 0){
 	$que = "SELECT * FROM book JOIN writtenby ON book.ISBN = writtenby.ISBN JOIN author ON writtenby.AuthorID = author.ID JOIN workswith ON author.ID = workswith.AuthorID JOIN publisher on workswith.PublisherID = publisher.ID
 	WHERE book.ISBN = " . "'" . $_GET['searchfor'] . "'";
 }
 //Search on Keyword
-if(strcmp($_GET['searchon'][0], 'anywhere') == 0){
+if(strcmp($_GET['searchon'], 'anywhere') == 0){
 	$que = "SELECT * FROM book JOIN writtenby ON book.ISBN = writtenby.ISBN JOIN author ON writtenby.AuthorID = author.ID JOIN workswith ON author.ID = workswith.AuthorID JOIN publisher on workswith.PublisherID = publisher.ID
 	WHERE book.ISBN LIKE '%" . $_GET['searchfor'] . "%' OR book.title LIKE '%" . $_GET['searchfor'] . "%' OR author.Fname LIKE '%" . $_GET['searchfor'] . "%' OR author.Lname LIKE '%" . $_GET['searchfor'] . "%' OR publisher.Name LIKE '%" . $_GET['searchfor'] . "%'";
 }
@@ -148,6 +145,15 @@ document.getElementById("cartItems").innerHTML = "You have " + shoppingCart.leng
 
 	function manage(){
 		window.location.href="shopping_cart.php?shoppingCart="+shoppingCart;
+	}
+	
+	var searchfor = "<?php echo $_GET['searchfor']; ?>"; 
+	var category = "<?php echo $_GET['category']; ?>";
+	var searchon = "<?php echo $_GET['searchon']; ?>";
+	//redirect to reviews page
+	function review(isbn, title){
+		window.location.href="screen4.php?isbn="+ isbn + "&title=" + title + "&searchfor=" + searchfor 
+		+ "&category=" + category + "&searchon=" + searchon;
 	}
 </script>
 </html>

@@ -63,13 +63,19 @@
 		</tr>
 		<tr>
 			<td colspan="2" align="center">
-				<form action="screen2.php" method="post">
-					<input type="submit" value="Done">
-				</form>
+				<input type="submit" value="Done" onclick="returnToSearchResults()">
 			</td>
 		</tr>
 	</table>
 
 </body>
-
+<script>
+	
+	var searchfor = "<?php echo $_GET['searchfor']; ?>"; 
+	var category = "<?php echo $_GET['category']; ?>";
+	var searchon = "<?php echo $_GET['searchon']; ?>";
+	function returnToSearchResults(){
+		window.location.href="screen3.php?searchfor=" + searchfor + "&category=" + category + "&searchon=" + searchon;
+	}
+</script>
 </html>
