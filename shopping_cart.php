@@ -106,6 +106,7 @@ print_r($book_quantity);
 <script>
 var shoppingCart = "<?php echo $_GET["shoppingCart"]; ?>";
 var quantityDB = <?php echo json_encode($book_quantity); ?>;
+const quantityDEL = [];
 
 function newSearch(){
 	window.location.href="screen2.php?shoppingcart=" + shoppingCart;
@@ -113,8 +114,8 @@ function newSearch(){
 
 function calculateSubtotal(){
 	var total = 0;
-	var books = document.getElementsByClassName("price");
 	var quantityWeb = document.getElementsByClassName('quantity');
+	var books = document.getElementsByClassName("price");
 	console.log(quantityWeb[0].value);
 	console.log(quantityWeb);
 	for(var i = 0; i < books.length; i++){
@@ -124,6 +125,11 @@ function calculateSubtotal(){
 		total += parseFloat(books[i].innerHTML) * parseFloat(quantityWeb[i].value);
 	}
 	document.getElementById("total").innerHTML = "Subtotal: " + total;
+	for (var k = 0; k < books.length; k++){
+		console.log(quantityWeb[k].value);
+		quantityDEL.push(quantityWeb[k].value);
+	}
+	console.log(quantityDEL);
 }
 calculateSubtotal();
 
