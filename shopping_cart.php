@@ -29,15 +29,14 @@ for ($x = 0; $x < count($book_arr); $x+=4) {
 	$que = "SELECT Qty FROM book WHERE book.ISBN = $book_arr[$x]";
 	if(strcmp($que, "") != 0){
 		$res = mysqli_query($db, $que);
-		if ($res==null) echo "<p>nothing returned</p>";//error checking
-		if ($res->num_rows > 0) {
+		if ($res != null and $res->num_rows > 0) {
 			while($row = $res->fetch_assoc()) {
 				array_push($book_quantity, $row['Qty']);
 		}
   	}
 	}
 }
-print_r($book_quantity);
+
 
 ?>
 
@@ -59,7 +58,7 @@ print_r($book_quantity);
 		</tr>
 
 		<tr>
-				<form id="render" name="render" action="" method="post">
+			
 
 			<td  colspan='3'>
 			<div id='bookdetails' style='overflow:scroll;height:180px;width:400px;border:1px solid black;'>
@@ -69,7 +68,7 @@ print_r($book_quantity);
 				for ($x = 0; $x < count($book_arr); $x+=4) {
 					echo "<th width='10%'>Remove</th><th width='60%'>Book Description</th><th width='10%'>Qty</th><th width='10%'>Price</th>";
 					echo "<tr>";
-					echo "<td><button name='delete' id='delete' onClick='del($book_arr[$x]);return false;'>Delete Item</button></td>";
+					echo "<td><button name='delete' id='delete' onClick='del($book_arr[$x]);'>Delete Item</button></td>";
 					echo "<td>" . $book_arr[$x+1] . "</br><b>By</b> " . $book_arr[$x+2] . "</br></td>";
 					echo "</br>";
 					echo "<td>";
@@ -89,7 +88,7 @@ print_r($book_quantity);
 
 		<tr>
 
-		</form>	
+
 			<td align="center">			
 					<input type="submit" name="recalculate_payment" id="recalculate_payment" value="Recalculate Payment" onclick="calculateSubtotal()">
 				
@@ -104,7 +103,8 @@ print_r($book_quantity);
 <script>
 var shoppingCart = "<?php echo $_GET["shoppingCart"]; ?>";
 var quantityDB = <?php echo json_encode($book_quantity); ?>;
-const quantityDEL = [];
+
+
 
 function newSearch(){
 	window.location.href="screen2.php?shoppingcart=" + shoppingCart;
@@ -122,27 +122,32 @@ function calculateSubtotal(){
 			total += parseFloat(books[i].innerHTML) * parseFloat(quantityWeb[i].value);
 		}
 	}
-	document.getElementById("total").innerHTML = "Subtotal: " + total;
-	for (var k = 0; k < books.length; k++){
-		console.log(quantityWeb[k].value);
-		quantityDEL.push(quantityWeb[k].value);
-	}
-	console.log(quantityDEL);
+	document.getElementById("total").innerHTML = "Subtotal: " + Math.round(100*total)/100;
+
 }
 calculateSubtotal();
 
 function del(isbn){
 		var passedArray = <?php echo json_encode($book_arr); ?>;
 		var urlArray = "";
-		var quantityWeb = document.getElementsByClassName('quantity');
+		var quantityWebCollection = document.getElementsByClassName('quantity');
+		var quantityWeb = [];
+		//Convert HTML collection to Array
+		for(var x = 0; x < quantityWebCollection.length; x++){
+			quantityWeb.push(quantityWebCollection[x].value);
+		}
+		console.log(passedArray.length);
+		//Remove Deleted item from shopping cart and it's associated qty 
 		for(var i = 0; i < passedArray.length; i++){
 			if (passedArray[i]==isbn){
 				passedArray.splice(i, 4);
-				// quantityWeb.splice(i, 1);
-				// quantityDB.splice(i, 1);
-				// document.getElementById("book"+isbn.toString()).style.display = 'none';
+				quantityWeb.splice(i/4, 1);
 			}
 		}
+
+		console.log(passedArray);
+		console.log(quantityWeb);
+		//Set up shopping cart to put in url
 		for(var j = 0; j < passedArray.length; j++){
 			if (j < passedArray.length - 1){
 				urlArray+=passedArray[j]+",";
@@ -151,6 +156,10 @@ function del(isbn){
 				urlArray+=passedArray[j];
 			}
 		}
-		window.location.href="shopping_cart.php?shoppingCart="+urlArray;
+
+		//Set up quantity to put in url
+		var urlQuantity = quantityWeb.toString();
+
+		window.location.href="shopping_cart.php?shoppingCart="+urlArray + "&quantity=" + urlQuantity;
 	}
 </script>
