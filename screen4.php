@@ -48,7 +48,7 @@
 				$out = mysqli_num_rows($res);
 				if ($out==0) echo "no rows";//error checking
 
-				if ($res->num_rows > 0) {
+				if ($res != null and $res->num_rows > 0) {
 					// output data of each row
 					while($row = $res->fetch_assoc()) {
 					echo "<tr> ".$row["Content"]. "</tr><br>";
@@ -70,7 +70,6 @@
 
 </body>
 <script>
-	
 	var searchfor = "<?php echo $_GET['searchfor']; ?>"; 
 	var category = "<?php echo $_GET['category']; ?>";
 	var searchon = "<?php echo $_GET['searchon']; ?>";

@@ -42,23 +42,30 @@ $que = "";
 //Search on title
 if(strcmp($_GET['searchon'], 'title') == 0){
 	$que = "SELECT * FROM book JOIN writtenby ON book.ISBN = writtenby.ISBN JOIN author ON writtenby.AuthorID = author.ID JOIN workswith ON author.ID = workswith.AuthorID JOIN publisher on workswith.PublisherID = publisher.ID
-	WHERE book.TITLE = " . "'" . $_GET['searchfor'] . "'";
+	WHERE book.TITLE LIKE " . "'%" . $_GET['searchfor'] . "%'";
 }
 //Search on author
 if(strcmp($_GET['searchon'], 'author') == 0){
 	$author = explode(" " , $_GET['searchfor']);
+	//if author has first and last name
+	if(count($author) == 2){
 	$que = "SELECT * FROM book JOIN writtenby ON book.ISBN = writtenby.ISBN JOIN author ON writtenby.AuthorID = author.ID JOIN workswith ON author.ID = workswith.AuthorID JOIN publisher on workswith.PublisherID = publisher.ID
-	WHERE author.Fname = '" .  $author[0] . "' AND "  . "author.Lname = '" . $author[1] . "'";
+	WHERE author.Fname LIKE '%" .  $author[0] . "%' OR "  . "author.Lname = '%" . $author[1] . "%'";
+	} else {//if author is only one value
+		$que = "SELECT * FROM book JOIN writtenby ON book.ISBN = writtenby.ISBN JOIN author ON writtenby.AuthorID = author.ID JOIN workswith ON author.ID = workswith.AuthorID JOIN publisher on workswith.PublisherID = publisher.ID
+		WHERE author.Fname LIKE '%" .  $author[0] . "%' OR "  . "author.Lname = '%" . $author[0] . "%'";
+	}
+	
 }
 //Search on publisher
 if(strcmp($_GET['searchon'], 'publisher') == 0){
 	$que = "SELECT * FROM book JOIN writtenby ON book.ISBN = writtenby.ISBN JOIN author ON writtenby.AuthorID = author.ID JOIN workswith ON author.ID = workswith.AuthorID JOIN publisher on workswith.PublisherID = publisher.ID
-	WHERE publisher.Name = " . "'" . $_GET['searchfor'] . "'";
+	WHERE publisher.Name LIKE " . "'%" . $_GET['searchfor'] . "%'";
 }
 //Search on ISBN
-if(strcmp($_GET['searchon'], 'keyword') == 0){
+if(strcmp($_GET['searchon'], 'isbn') == 0){
 	$que = "SELECT * FROM book JOIN writtenby ON book.ISBN = writtenby.ISBN JOIN author ON writtenby.AuthorID = author.ID JOIN workswith ON author.ID = workswith.AuthorID JOIN publisher on workswith.PublisherID = publisher.ID
-	WHERE book.ISBN = " . "'" . $_GET['searchfor'] . "'";
+	WHERE book.ISBN LIKE '%"  . $_GET['searchfor'] . "%'";
 }
 //Search on Keyword
 if(strcmp($_GET['searchon'], 'anywhere') == 0){
@@ -80,6 +87,8 @@ if($_GET['category'] == 3){
 if($_GET['category'] == 4){
 	$que .= " AND book.genre = 'Horror'";
 }
+echo $que;
+
 ?>
 
 
@@ -103,8 +112,8 @@ if($_GET['category'] == 4){
 <?php
 if(strcmp($que, "") != 0){
 	$res = mysqli_query($db, $que);
-	if ($res==null) echo "<p>nothing returned</p>";//error checking
-	if ($res->num_rows > 0) {
+
+	if ($res != null and $res->num_rows > 0) {
 		while($row = $res->fetch_assoc()) {
 			echo "<tr><td align='left'><button name='btnCart' id='btnCart" . $row["ISBN"] . "' onClick='addToCart(\"" . $row["ISBN"]  . "\", \"" . $row["Title"] . "\", \"" . $row["Fname"] . " " . $row["Lname"] . "\", \"" . $row["Price"] . "\")'> 
 			Add to Cart </button></td><td rowspan='2' align='left'>" . $row["Title"] . "</br>By " . $row["Fname"] . $row["Lname"] . "</br><b>Publisher:</b> " . $row["Name"] . " </br><b><span class='isbn' ISBN:</b> " . $row["ISBN"] . "</span></t> <b>Price:</b> " . $row["Price"] . "</td></tr><tr><td align='left'><button name='review' id='review' onClick='review(\"" . $row["ISBN"] . "\", \"" . $row["Title"] . "\")'>Reviews</button></td></tr>";
