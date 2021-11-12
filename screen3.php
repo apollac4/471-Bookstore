@@ -22,16 +22,7 @@
 			tempCart.push(temp);
 		}
 		shoppingCart = tempCart;
-	}
-	//add to cart
-	function cart(isbn, searchfor, searchon, category){
-		window.location.href="screen3.php?cartisbn="+ isbn + "&searchfor=" + searchfor + "&searchon=" + searchon + "&category=" + category;
-
-		// onClick='cart(\"" . $row["ISBN"] . "\", \"" . $_GET["searchfor"] . "\", \"" . $_GET["searchon"][0] . "\", \"" . $_GET["category"] . "\")'>
-	} 
-
-
-	
+	}	
 	</script>
 </head>
 <body>
@@ -116,7 +107,7 @@ if(strcmp($que, "") != 0){
 	if ($res->num_rows > 0) {
 		while($row = $res->fetch_assoc()) {
 			echo "<tr><td align='left'><button name='btnCart' id='btnCart" . $row["ISBN"] . "' onClick='addToCart(\"" . $row["ISBN"]  . "\", \"" . $row["Title"] . "\", \"" . $row["Fname"] . " " . $row["Lname"] . "\", \"" . $row["Price"] . "\")'> 
-			Add to Cart </button></td><td rowspan='2' align='left'>" . $row["Title"] . "</br>By " . $row["Fname"] . $row["Lname"] . "</br><b>Publisher:</b> " . $row["Name"] . " </br><b>ISBN:</b> " . $row["ISBN"] . "</t> <b>Price:</b> " . $row["Price"] . "</td></tr><tr><td align='left'><button name='review' id='review' onClick='review(\"" . $row["ISBN"] . "\", \"" . $row["Title"] . "\")'>Reviews</button></td></tr>";
+			Add to Cart </button></td><td rowspan='2' align='left'>" . $row["Title"] . "</br>By " . $row["Fname"] . $row["Lname"] . "</br><b>Publisher:</b> " . $row["Name"] . " </br><b><span class='isbn' ISBN:</b> " . $row["ISBN"] . "</span></t> <b>Price:</b> " . $row["Price"] . "</td></tr><tr><td align='left'><button name='review' id='review' onClick='review(\"" . $row["ISBN"] . "\", \"" . $row["Title"] . "\")'>Reviews</button></td></tr>";
 		}
 	} else {
 		echo "<tr><td>0 results</td><tr>";
@@ -148,6 +139,19 @@ if(strcmp($que, "") != 0){
 </body>
 <script>
 document.getElementById("cartItems").innerHTML = "You have " + shoppingCart.length + " items in your cart.";
+
+	//disable add to cart button for books already in cart
+	var isbns = document.getElementsByClassName("isbn");
+	console.log(isbns);
+	for(var i = 0; i < isbns.length; i++){
+		for(var j = 0; j < shoppingCart.length; j++){
+			console.log(isbns[i].innerText);
+			console.log(shoppingCart[j][0]);
+			if(isbns[i].innerText == shoppingCart[j][0]){
+				document.getElementById("btnCart" + isbns[i].innerText).disabled = true;
+			}
+		}
+	}
 
 	//Add item to cart array and total cart amount
 	function addToCart(ISBN, title, author, price){
