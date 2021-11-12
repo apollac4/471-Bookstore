@@ -116,9 +116,9 @@ function calculateSubtotal(){
 	var total = 0;
 	var quantityWeb = document.getElementsByClassName('quantity');
 	var books = document.getElementsByClassName("price");
-	console.log(quantityWeb[0].value);
-	console.log(quantityWeb);
+	console.log(quantityDEL[0].value);
 	for(var i = 0; i < books.length; i++){
+		quantityWeb[i].value = quantityDEL.pop();
 		if (parseInt(quantityDB[i]) < parseInt(quantityWeb[i].value)){
 			alert("Too many copies of that book.");
 		}
