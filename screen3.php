@@ -125,9 +125,7 @@ if(strcmp($que, "") != 0){
 				</form>
 			</td>
 			<td align="center">
-				<form action="screen2.php" method="post">
-					<input type="submit" value="New Search">
-				</form>
+					<input type="submit" value="New Search" onclick="newSearch()">
 			</td>
 			<td align="center">
 				<form action="index.php" method="post">
@@ -142,7 +140,6 @@ document.getElementById("cartItems").innerHTML = "You have " + shoppingCart.leng
 
 	//disable add to cart button for books already in cart
 	var isbns = document.getElementsByClassName("isbn");
-	console.log(isbns);
 	for(var i = 0; i < isbns.length; i++){
 		for(var j = 0; j < shoppingCart.length; j++){
 			console.log(isbns[i].innerText);
@@ -164,6 +161,10 @@ document.getElementById("cartItems").innerHTML = "You have " + shoppingCart.leng
 
 	function manage(){
 		window.location.href="shopping_cart.php?shoppingCart="+shoppingCart;
+	}
+
+	function newSearch(){
+		window.location.href="screen2.php?shoppingcart=" +shoppingCart;
 	}
 	
 	var searchfor = "<?php echo $_GET['searchfor']; ?>"; 

@@ -22,7 +22,7 @@
 						<option value="isbn">ISBN</option>				
 					</select>
 				</td>
-				<td><a href="shopping_cart.php"><input type="button" name="manage" value="Manage Shopping Cart" /></a></td>
+				<td><input type="button" name="manage" value="Manage Shopping Cart" onclick="manage()"/></td>
 		</tr>
 		<tr>
 			<td>Category: </td>
@@ -44,9 +44,14 @@ function toResults(){
 	var searchfor = document.getElementById("searchfor").value;
 	var category = document.getElementById("category").value;
 	var searchon = document.getElementById("searchon").value;
+	
 	window.location.href="screen3.php?searchfor=" + searchfor + "&category=" + category 
 		+ "&searchon=" + searchon + "&shoppingcart=" + shoppingCart;
 }
+
+function manage(){
+		window.location.href="shopping_cart.php?shoppingCart="+shoppingCart;
+	}
 
 </script>
 </html>
