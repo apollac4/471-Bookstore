@@ -87,7 +87,6 @@ if($_GET['category'] == 3){
 if($_GET['category'] == 4){
 	$que .= " AND book.genre = 'Horror'";
 }
-echo $que;
 
 ?>
 
