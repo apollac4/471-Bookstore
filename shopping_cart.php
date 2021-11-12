@@ -67,7 +67,6 @@ print_r($book_quantity);
 			<?php
 			if(count($book_arr) > 1){
 				for ($x = 0; $x < count($book_arr); $x+=4) {
-					// echo "<div id='book" . $book_arr[$x] . "'>";
 					echo "<th width='10%'>Remove</th><th width='60%'>Book Description</th><th width='10%'>Qty</th><th width='10%'>Price</th>";
 					echo "<tr>";
 					echo "<td><button name='delete' id='delete' onClick='del($book_arr[$x]);return false;'>Delete Item</button></td>";
@@ -79,7 +78,6 @@ print_r($book_quantity);
 					echo "<td class='price'>" . $book_arr[$x+3] .  "</td>";
 					echo "<td></td>";
 					echo "</tr>";
-					// echo "</div>";
 					}
 			}
 								?>
@@ -113,16 +111,16 @@ function newSearch(){
 }
 
 function calculateSubtotal(){
+	var passedArray = <?php echo json_encode($book_arr); ?>;
 	var total = 0;
 	var quantityWeb = document.getElementsByClassName('quantity');
 	var books = document.getElementsByClassName("price");
-	console.log(quantityDEL[0].value);
 	for(var i = 0; i < books.length; i++){
-		quantityWeb[i].value = quantityDEL.pop();
 		if (parseInt(quantityDB[i]) < parseInt(quantityWeb[i].value)){
-			alert("Too many copies of that book.");
+			alert("Too many copies of " + passedArray[i+1] + ".  Please select a new quantity.");
+		} else {
+			total += parseFloat(books[i].innerHTML) * parseFloat(quantityWeb[i].value);
 		}
-		total += parseFloat(books[i].innerHTML) * parseFloat(quantityWeb[i].value);
 	}
 	document.getElementById("total").innerHTML = "Subtotal: " + total;
 	for (var k = 0; k < books.length; k++){
