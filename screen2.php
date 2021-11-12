@@ -40,12 +40,10 @@
 
 var shoppingCart = "<?php echo $_GET['shoppingcart']; ?>";
 
-
-var searchfor = document.getElementById("searchfor").value;
-var category = document.getElementById("category").value;
-var searchon = document.getElementById("searchon").value;
-
 function toResults(){
+	var searchfor = document.getElementById("searchfor").value;
+	var category = document.getElementById("category").value;
+	var searchon = document.getElementById("searchon").value;
 	window.location.href="screen3.php?searchfor=" + searchfor + "&category=" + category 
 		+ "&searchon=" + searchon + "&shoppingcart=" + shoppingCart;
 }
