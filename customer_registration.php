@@ -12,31 +12,39 @@ $db = new mysqli('localhost', $user, $pass, $db) or die("Unable to connect");
 if (mysqli_connect_errno()) echo "not connected! ".$db->error;
 
 if(isset($_POST['register_submit'])){
-    $username =  mysqli_real_escape_string($db,$_POST['username']);
-    $pin = mysqli_real_escape_string($db,$_POST['pin']);
-	$fname = mysqli_real_escape_string($db,$_POST['firstname']);
-	$lname = mysqli_real_escape_string($db,$_POST['lastname']);
-	$address = mysqli_real_escape_string($db,$_POST['address']);
-	$city = mysqli_real_escape_string($db,$_POST['city']);
-	$state = mysqli_real_escape_string($db,$_POST['state']);
-	$zip = mysqli_real_escape_string($db,$_POST['zip']);
-	$cctype = mysqli_real_escape_string($db,$_POST['credit_card']);
-	$ccnumber = mysqli_real_escape_string($db,$_POST['card_number']);
-	$expirationdate = mysqli_real_escape_string($db,$_POST['expiration']);
+	//Check if user exists
+	$username =  mysqli_real_escape_string($db,$_POST['username']);
+	$que = "SELECT * FROM customer WHERE username = '". $username ."'";
+
+	$res = mysqli_query($db, $que);
+	if($res!=null){
+		$pin = mysqli_real_escape_string($db,$_POST['pin']);
+		$fname = mysqli_real_escape_string($db,$_POST['firstname']);
+		$lname = mysqli_real_escape_string($db,$_POST['lastname']);
+		$address = mysqli_real_escape_string($db,$_POST['address']);
+		$city = mysqli_real_escape_string($db,$_POST['city']);
+		$state = mysqli_real_escape_string($db,$_POST['state']);
+		$zip = mysqli_real_escape_string($db,$_POST['zip']);
+		$cctype = mysqli_real_escape_string($db,$_POST['credit_card']);
+		$ccnumber = mysqli_real_escape_string($db,$_POST['card_number']);
+		$expirationdate = mysqli_real_escape_string($db,$_POST['expiration']);
 
 
-    $insert = $db->query("INSERT INTO `customer` (`username`, `pin`, `fname`, `lname`, `address`, `city`, `state`, `zip`, `cccompany`, `ccnumber`, `ccexpiration`) VALUES ('$username', $pin, '$fname', '$lname', '$address', '$city', '$state', $zip, '$cctype', '$ccnumber', '$expirationdate');");
+		$insert = $db->query("INSERT INTO `customer` (`username`, `pin`, `fname`, `lname`, `address`, `city`, `state`, `zip`, `cccompany`, `ccnumber`, `ccexpiration`) VALUES ('$username', $pin, '$fname', '$lname', '$address', '$city', '$state', $zip, '$cctype', '$ccnumber', '$expirationdate');");
 
-	
-    if(!$insert)
-    {
-        echo "Problem inserting";
-		echo mysqli_error($db);
-    }
-    else
-    {
-        echo "Records added successfully.";
-    }
+		
+		if(!$insert)
+		{
+			echo "Problem inserting";
+			echo mysqli_error($db);
+		}
+		else
+		{
+			echo "Records added successfully.";
+		}
+	} else {
+		echo "User already exists.  Please enter a valid username";
+	}
 }
 	mysqli_close($db);
 
