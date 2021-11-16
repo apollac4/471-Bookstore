@@ -23,7 +23,7 @@ parse_str($url_components['query'], $params);
 $book_quantity = [];
 $book1 = $params['shoppingCart'];
 $book_arr = (explode(",",$book1));
-// print_r($book_arr);
+
 
 for ($x = 0; $x < count($book_arr); $x+=4) {
 	$que = "SELECT Qty FROM book WHERE book.ISBN = $book_arr[$x]";
@@ -43,9 +43,7 @@ for ($x = 0; $x < count($book_arr); $x+=4) {
 	<table align="center" style="border:2px solid blue;">
 		<tr>
 			<td align="center">
-				<form id="checkout" action="confirm_order.php" method="get">
-					<input type="submit" name="checkout_submit" id="checkout_submit" value="Proceed to Checkout">
-				</form>
+				<input type="submit" onclick="toCheckout()" name="checkout_submit" id="checkout_submit" value="Proceed to Checkout">
 			</td>
 			<td align="center">
 				<input type="submit" onClick='newSearch()' name="search" id="search" value="New Search">							
@@ -104,7 +102,9 @@ for ($x = 0; $x < count($book_arr); $x+=4) {
 var shoppingCart = "<?php echo $_GET["shoppingCart"]; ?>";
 var quantityDB = <?php echo json_encode($book_quantity); ?>;
 
-
+function toCheckout(){
+	window.location.href="confirm_order.php?shoppingcart=" + shoppingCart;
+}
 
 function newSearch(){
 	window.location.href="screen2.php?shoppingcart=" + shoppingCart;
@@ -162,4 +162,6 @@ function del(isbn){
 
 		window.location.href="shopping_cart.php?shoppingCart="+urlArray + "&quantity=" + urlQuantity;
 	}
+
+
 </script>
