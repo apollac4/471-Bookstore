@@ -117,7 +117,9 @@ function calculateSubtotal(){
 	var books = document.getElementsByClassName("price");
 	for(var i = 0; i < books.length; i++){
 		if (parseInt(quantityDB[i]) < parseInt(quantityWeb[i].value)){
-			alert("Too many copies of " + passedArray[i+1] + ".  Please select a new quantity.");
+			//Find index of book in passedArray
+
+			alert("Too many copies of " + passedArray[(i*4)+1] + ".  Please select a new quantity.");
 		} else {
 			total += parseFloat(books[i].innerHTML) * parseFloat(quantityWeb[i].value);
 		}
@@ -145,8 +147,6 @@ function del(isbn){
 			}
 		}
 
-		console.log(passedArray);
-		console.log(quantityWeb);
 		//Set up shopping cart to put in url
 		for(var j = 0; j < passedArray.length; j++){
 			if (j < passedArray.length - 1){
