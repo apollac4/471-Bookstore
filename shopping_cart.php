@@ -117,8 +117,6 @@ function calculateSubtotal(){
 	var books = document.getElementsByClassName("price");
 	for(var i = 0; i < books.length; i++){
 		if (parseInt(quantityDB[i]) < parseInt(quantityWeb[i].value)){
-			//Find index of book in passedArray
-
 			alert("Too many copies of " + passedArray[(i*4)+1] + ".  Please select a new quantity.");
 		} else {
 			total += parseFloat(books[i].innerHTML) * parseFloat(quantityWeb[i].value);
