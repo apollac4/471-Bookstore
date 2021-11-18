@@ -76,8 +76,10 @@ function toResults(){
 	var searchfor = document.getElementById("searchfor").value;
 	var category = document.getElementById("category").value;
 	var searchon = document.getElementById("searchon").value;
+	var username = "<?php echo $username ?>";
+	
 	window.location.href="screen3.php?searchfor=" + searchfor + "&category=" + category 
-		+ "&searchon=" + searchon + "&shoppingcart=" + shoppingCart;
+		+ "&searchon=" + searchon + "&shoppingcart=" + shoppingCart + "&username=" + username;
 }
 
 </script>

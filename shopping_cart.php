@@ -101,7 +101,7 @@ for ($x = 0; $x < count($book_arr); $x+=4) {
 <script>
 var shoppingCart = "<?php echo $_GET["shoppingCart"]; ?>";
 var quantityDB = <?php echo json_encode($book_quantity); ?>;
-
+var username = "<?php echo $_GET['username'] ?>";
 function toCheckout(){
 	var quantityWeb = document.getElementsByClassName('quantity');
 	var quantities = "";
@@ -109,11 +109,11 @@ function toCheckout(){
 		quantities += quantityWeb[i].value+",";
 	}
 
-	window.location.href="confirm_order.php?shoppingcart=" + shoppingCart + "&quantities=" + quantities;
+	window.location.href="confirm_order.php?shoppingcart=" + shoppingCart + "&quantities=" + quantities+ "&username=" + username;
 }
 
 function newSearch(){
-	window.location.href="screen2.php?shoppingcart=" + shoppingCart;
+	window.location.href="screen2.php?shoppingcart=" + shoppingCart+ "&username=" + username;
 }
 
 function calculateSubtotal(){
@@ -164,7 +164,7 @@ function del(isbn){
 		//Set up quantity to put in url
 		var urlQuantity = quantityWeb.toString();
 
-		window.location.href="shopping_cart.php?shoppingCart="+urlArray + "&quantity=" + urlQuantity;
+		window.location.href="shopping_cart.php?shoppingCart="+urlArray + "&quantity=" + urlQuantity+ "&username=" + username;
 	}
 
 

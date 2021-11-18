@@ -74,9 +74,10 @@
 	var category = "<?php echo $_GET['category']; ?>";
 	var searchon = "<?php echo $_GET['searchon']; ?>";
 	var shoppingCart = "<?php echo $_GET['shoppingcart']; ?>";
+	var username = "<?php echo $_GET['username']; ?>";
 	function returnToSearchResults(){
 		window.location.href="screen3.php?searchfor=" + searchfor + "&category=" + category 
-		+ "&searchon=" + searchon + "&shoppingcart=" + shoppingCart;
+		+ "&searchon=" + searchon + "&shoppingcart=" + shoppingCart + "&username=" + username;
 	}
 </script>
 </html>

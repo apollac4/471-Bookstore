@@ -4,7 +4,6 @@
 <head>
 	<title> Search Result - 3-B.com </title>
 	<script>
-
 	var shoppingCart = "<?php echo $_GET['shoppingcart']; ?>"; 
 
 	//Check value of shopping cart and convert to array
@@ -27,6 +26,7 @@
 </head>
 <body>
 <?php
+echo $_GET['username'];
 $user = 'root';
 $pass = '';
 $db = 'bookstore471';
@@ -145,7 +145,7 @@ if(strcmp($que, "") != 0){
 </body>
 <script>
 document.getElementById("cartItems").innerHTML = "You have " + shoppingCart.length + " items in your cart.";
-
+var username = "<?php echo $_GET['username']; ?>";
 	//disable add to cart button for books already in cart
 	var isbns = document.getElementsByClassName("isbn");
 	for(var i = 0; i < isbns.length; i++){
@@ -168,21 +168,20 @@ document.getElementById("cartItems").innerHTML = "You have " + shoppingCart.leng
 	}
 
 	function manage(){
-		window.location.href="shopping_cart.php?shoppingCart="+shoppingCart;
+		window.location.href="shopping_cart.php?shoppingCart="+shoppingCart+"&username="+username;
 	}
 
 	function newSearch(){
-		window.location.href="screen2.php?shoppingcart=" +shoppingCart;
+		window.location.href="screen2.php?shoppingcart=" +shoppingCart+"&username="+username;
 	}
 	
 	var searchfor = "<?php echo $_GET['searchfor']; ?>"; 
 	var category = "<?php echo $_GET['category']; ?>";
 	var searchon = "<?php echo $_GET['searchon']; ?>";
-
 	//redirect to reviews page
 	function review(isbn, title){
 		window.location.href="screen4.php?isbn="+ isbn + "&title=" + title + "&searchfor=" + searchfor 
-		+ "&category=" + category + "&searchon=" + searchon + "&shoppingcart=" + shoppingCart;
+		+ "&category=" + category + "&searchon=" + searchon + "&shoppingcart=" + shoppingCart+"&username="+username;
 	}
 </script>
 </html>
