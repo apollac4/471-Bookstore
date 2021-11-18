@@ -5,6 +5,32 @@
 	<title>SEARCH - 3-B.com</title>
 </head>
 <body>
+	<?php
+	$username = $_REQUEST['username'];
+	$pin = $_REQUEST['pin'];
+	$user = 'root';
+	$pass = '';
+	$db = 'bookstore471';
+	$db = new mysqli('localhost', $user, $pass, $db) or die("Unable to connect");
+
+	if (mysqli_connect_errno()) {
+		echo "not connected! ".$db->error;
+		echo $db->error;
+	}
+
+	$query = "SELECT * FROM customer WHERE Username='$username' AND PIN = '$pin'";
+	$result = mysqli_query($db, $query);
+    $num_rows = mysqli_num_rows($result);
+	if (mysqli_num_rows($result)==0){
+		echo "No current user. Please sign up or enter correct sign-in information.";
+	}
+	else {
+		for ($i = 0; $i < $num_rows; $i++) {
+			$row = mysqli_fetch_assoc($result);
+			echo "Successfully logged in as " . $row["Username"];
+		}
+	}
+	?>
 	<table align="center" style="border:1px solid blue;">
 		<tr>
 			<td>Search for: </td>
@@ -22,7 +48,7 @@
 						<option value="isbn">ISBN</option>				
 					</select>
 				</td>
-				<td><input type="button" name="manage" value="Manage Shopping Cart" onclick="manage()"/></td>
+				<td><a href="shopping_cart.php"><input type="button" name="manage" value="Manage Shopping Cart" /></a></td>
 		</tr>
 		<tr>
 			<td>Category: </td>
@@ -44,14 +70,9 @@ function toResults(){
 	var searchfor = document.getElementById("searchfor").value;
 	var category = document.getElementById("category").value;
 	var searchon = document.getElementById("searchon").value;
-	
 	window.location.href="screen3.php?searchfor=" + searchfor + "&category=" + category 
 		+ "&searchon=" + searchon + "&shoppingcart=" + shoppingCart;
 }
-
-function manage(){
-		window.location.href="shopping_cart.php?shoppingCart="+shoppingCart;
-	}
 
 </script>
 </html>
