@@ -103,7 +103,13 @@ var shoppingCart = "<?php echo $_GET["shoppingCart"]; ?>";
 var quantityDB = <?php echo json_encode($book_quantity); ?>;
 
 function toCheckout(){
-	window.location.href="confirm_order.php?shoppingcart=" + shoppingCart;
+	var quantityWeb = document.getElementsByClassName('quantity');
+	var quantities = "";
+	for(var i = 0; i < quantityWeb.length; i++){
+		quantities += quantityWeb[i].value+",";
+	}
+
+	window.location.href="confirm_order.php?shoppingcart=" + shoppingCart + "&quantities=" + quantities;
 }
 
 function newSearch(){
