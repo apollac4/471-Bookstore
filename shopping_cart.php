@@ -103,7 +103,13 @@ var shoppingCart = "<?php echo $_GET["shoppingCart"]; ?>";
 var quantityDB = <?php echo json_encode($book_quantity); ?>;
 
 function toCheckout(){
-	window.location.href="confirm_order.php?shoppingcart=" + shoppingCart;
+	var quantityWeb = document.getElementsByClassName('quantity');
+	var quantities = "";
+	for(var i = 0; i < quantityWeb.length; i++){
+		quantities += quantityWeb[i].value+",";
+	}
+
+	window.location.href="confirm_order.php?shoppingcart=" + shoppingCart + "&quantities=" + quantities;
 }
 
 function newSearch(){
@@ -117,8 +123,6 @@ function calculateSubtotal(){
 	var books = document.getElementsByClassName("price");
 	for(var i = 0; i < books.length; i++){
 		if (parseInt(quantityDB[i]) < parseInt(quantityWeb[i].value)){
-			//Find index of book in passedArray
-
 			alert("Too many copies of " + passedArray[(i*4)+1] + ".  Please select a new quantity.");
 		} else {
 			total += parseFloat(books[i].innerHTML) * parseFloat(quantityWeb[i].value);

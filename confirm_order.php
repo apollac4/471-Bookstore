@@ -45,15 +45,17 @@
 	$url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 	$url_components = parse_url($url);
 	parse_str($url_components['query'], $params);
-	$book_quantity = [];
 	$book1 = $params['shoppingcart'];
 	$shoppingcart = (explode(",",$book1));
-	
+	$quantities = $params['quantities'];
+	$quantities = (explode(",",$quantities));
+
 	for($i = 0; $i < count($shoppingcart); $i+=4){
 		echo "<div id='bookdetails' style='overflow:scroll;height:180px;width:520px;border:1px solid black;'>";
 		echo "<table border='1'>";
 		echo "<th>Book Description</th><th>Qty</th><th>Price</th>";
-		echo "<tr><td>" . $shoppingcart[$i+1] . "</br><b>By</b> " . $shoppingcart[$i + 2] . "</br><b>Publisher:</b> TODO</td><td>1</td><td>" . $shoppingcart[$i+3] . "</td></tr>	</table>";
+		echo "<tr><td>" . $shoppingcart[$i+1] . "</br><b>By</b> " . $shoppingcart[$i + 2] . "</br><b>Publisher:</b> TODO</td><td>" . $quantities[$i/4] .
+		"</td><td>" . ((float)$shoppingcart[$i+3]) * ((int) $quantities[$i/4]) . "</td></tr></table>";
 	}
 
 	?>
