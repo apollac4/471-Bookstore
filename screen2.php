@@ -64,7 +64,13 @@
 </body>
 <script>
 
-var shoppingCart = "<?php echo $_GET['shoppingcart']; ?>";
+var shoppingCart = "<?php if(array_key_exists('shoppingcart', $_GET))
+							{
+								echo $_GET['shoppingcart'];
+							} else {
+								echo "empty";
+							}
+					?>";
 
 function toResults(){
 	var searchfor = document.getElementById("searchfor").value;
