@@ -6,29 +6,33 @@
 </head>
 <body>
 	<?php
-	$username = $_REQUEST['username'];
-	$pin = $_REQUEST['pin'];
-	$user = 'root';
-	$pass = '';
-	$db = 'bookstore471';
-	$db = new mysqli('localhost', $user, $pass, $db) or die("Unable to connect");
+	if(!array_key_exists("username",$_GET) & array_key_exists("username",$_REQUEST)){
+		$username = $_REQUEST['username'];
+		$pin = $_REQUEST['pin'];
+		$user = 'root';
+		$pass = '';
+		$db = 'bookstore471';
+		$db = new mysqli('localhost', $user, $pass, $db) or die("Unable to connect");
 
-	if (mysqli_connect_errno()) {
-		echo "not connected! ".$db->error;
-		echo $db->error;
-	}
-
-	$query = "SELECT * FROM customer WHERE Username='$username' AND PIN = '$pin'";
-	$result = mysqli_query($db, $query);
-    $num_rows = mysqli_num_rows($result);
-	if (mysqli_num_rows($result)==0){
-		echo "No current user. Please sign up or enter correct sign-in information.";
-	}
-	else {
-		for ($i = 0; $i < $num_rows; $i++) {
-			$row = mysqli_fetch_assoc($result);
-			echo "Successfully logged in as " . $row["Username"];
+		if (mysqli_connect_errno()) {
+			echo "not connected! ".$db->error;
+			echo $db->error;
 		}
+
+		$query = "SELECT * FROM customer WHERE Username='$username' AND PIN = '$pin'";
+		$result = mysqli_query($db, $query);
+		$num_rows = mysqli_num_rows($result);
+		if (mysqli_num_rows($result)==0){
+			echo "No current user. Please sign up or enter correct sign-in information.";
+		}
+		else {
+			for ($i = 0; $i < $num_rows; $i++) {
+				$row = mysqli_fetch_assoc($result);
+				echo "Successfully logged in as " . $row["Username"];
+			}
+		}
+	} else {
+		$username = "none";
 	}
 	?>
 	<table align="center" style="border:1px solid blue;">

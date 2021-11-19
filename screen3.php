@@ -26,7 +26,7 @@
 </head>
 <body>
 <?php
-echo $_GET['username'];
+
 $user = 'root';
 $pass = '';
 $db = 'bookstore471';
