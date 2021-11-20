@@ -5,7 +5,24 @@
 	<header align="center">Confirm Order</header> 
 </head>
 <body>
+	<?php
+	//Get user info from DB
+		$user = 'root';
+		$pass = '';
+		$db = 'bookstore471';
 
+		$db = new mysqli('localhost', $user, $pass, $db) or die("Unable to connect");
+
+		if (mysqli_connect_errno()) {
+		echo "not connected! ".$db->error;
+		echo $db->error;
+		}
+		$username = $_GET['username'];
+		$que = "SELECT * FROM customer WHERE username = '$username'";
+		
+		$res = mysqli_query($db, $que);
+
+	?>
 	<table align="center" style="border:2px solid blue;">
 	<form id="buy" action="proof_purchase.php" method="post">
 	<tr>
@@ -13,50 +30,56 @@
 	Shipping Address:
 	</td>
 	</tr>
-	<td colspan="2">
-		test test	</td>
-	<td rowspan="3" colspan="2">
-		<input type="radio" name="cardgroup" value="profile_card" checked>Use Credit card on file<br />MASTER - 1234567812345678 - 12/2015<br />
-		<input type="radio" name="cardgroup" value="new_card">New Credit Card<br />
-				<select id="credit_card" name="credit_card">
-					<option selected disabled>select a card type</option>
-					<option>VISA</option>
-					<option>MASTER</option>
-					<option>DISCOVER</option>
-				</select>
-				<input type="text" id="card_number" name="card_number" placeholder="Credit card number">
-				<br />Exp date<input type="text" id="card_expiration" name="card_expiration" placeholder="mm/yyyy">
-	</td>
-	<tr>
-	<td colspan="2">
-		test	</td>		
-	</tr>
-	<tr>
-	<td colspan="2">
-		test	</td>
-	</tr>
-	<tr>
-	<td colspan="2">
-		Tennessee, 12345	</td>
-	</tr>
+	<?php
+	if ($res != null and $res->num_rows > 0) {
+			$row = mysqli_fetch_assoc($res);
+			echo '<td colspan="2"> ' . $row['Fname'] . " " . $row['Lname']	. '</td>';
+			echo '<td rowspan="3" colspan="2">';
+			echo '<input type="radio" name="cardgroup" value="profile_card" checked>Use Credit card on file<br />' . $row['CCCompany'] . " - " . $row['CCNumber'] . " - " . $row['CCExpiration']."<br />";
+	}
+	?>
+			<input type="radio" name="cardgroup" value="new_card">New Credit Card<br />
+					<select id="credit_card" name="credit_card">
+						<option selected disabled>select a card type</option>
+						<option>VISA</option>
+						<option>MASTER</option>
+						<option>DISCOVER</option>
+					</select>
+					<input type="text" id="card_number" name="card_number" placeholder="Credit card number">
+					<br />Exp date<input type="text" id="card_expiration" name="card_expiration" placeholder="mm/yyyy">
+		</td>
+		<?php
+		echo'<tr>
+			<td colspan="2">
+				'. $row['Address']. '	</td>		
+			</tr>
+			<tr>
+			<td colspan="2">
+				'. $row['City'] .'	</td>
+			</tr>
+			<tr>
+			<td colspan="2">
+				'. $row['State'] . ', ' . $row['Zip'] . '</td>
+			</tr>';
+		?>
 	<tr>
 	<td colspan='3' align='center'>
 	<?php 
-	$url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-	$url_components = parse_url($url);
-	parse_str($url_components['query'], $params);
-	$book1 = $params['shoppingcart'];
-	$shoppingcart = (explode(",",$book1));
-	$quantities = $params['quantities'];
-	$quantities = (explode(",",$quantities));
+		$url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		$url_components = parse_url($url);
+		parse_str($url_components['query'], $params);
+		$book1 = $params['shoppingcart'];
+		$shoppingcart = (explode(",",$book1));
+		$quantities = $params['quantities'];
+		$quantities = (explode(",",$quantities));
 
-	for($i = 0; $i < count($shoppingcart); $i+=4){
-		echo "<div id='bookdetails' style='overflow:scroll;height:180px;width:520px;border:1px solid black;'>";
-		echo "<table border='1'>";
-		echo "<th>Book Description</th><th>Qty</th><th>Price</th>";
-		echo "<tr><td>" . $shoppingcart[$i+1] . "</br><b>By</b> " . $shoppingcart[$i + 2] . "</br><b>Publisher:</b> TODO</td><td>" . $quantities[$i/4] .
-		"</td><td>" . ((float)$shoppingcart[$i+3]) * ((int) $quantities[$i/4]) . "</td></tr></table>";
-	}
+		for($i = 0; $i < count($shoppingcart); $i+=4){
+			echo "<div id='bookdetails' style='overflow:scroll;height:180px;width:520px;border:1px solid black;'>";
+			echo "<table border='1'>";
+			echo "<th>Book Description</th><th>Qty</th><th>Price</th>";
+			echo "<tr><td>" . $shoppingcart[$i+1] . "</br><b>By</b> " . $shoppingcart[$i + 2] . "</br><b>Publisher:</b> TODO</td><td>" . $quantities[$i/4] .
+			"</td><td>" . ((float)$shoppingcart[$i+3]) * ((int) $quantities[$i/4]) . "</td></tr></table>";
+		}
 
 	?>
 	</div>
