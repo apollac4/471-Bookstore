@@ -6,7 +6,7 @@
 </head>
 <body>
 	<?php
-	if(!array_key_exists("username",$_GET) & array_key_exists("username",$_REQUEST)){
+	if(!array_key_exists("username",$_GET) and array_key_exists("username",$_REQUEST)){
 		$username = $_REQUEST['username'];
 		$pin = $_REQUEST['pin'];
 		$user = 'root';
@@ -31,9 +31,13 @@
 				echo "Successfully logged in as " . $row["Username"];
 			}
 		}
+	} 
+	if(array_key_exists("username",$_GET)){
+		$username = $_GET['username']; 
 	} else {
-		$username = "none";
+		$username = 'none';
 	}
+
 	?>
 	<table align="center" style="border:1px solid blue;">
 		<tr>

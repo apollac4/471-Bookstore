@@ -117,7 +117,7 @@
 	var shoppingCart = "<?php echo $_GET["shoppingcart"] ?>";
 	var username = "<?php echo $_GET["username"] ?>";
 	function cancel(){
-		window.location.href="screen2.php?shoppingCart="+shoppingCart+"&username="+username;
+		window.location.href="screen2.php?shoppingcart="+shoppingCart+"&username="+username;
 	}
 
 	function calculateTotal(){
