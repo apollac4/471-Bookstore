@@ -84,11 +84,17 @@
 			</form>
 		</td>
 		<td align="left">
-			<form id="cancel" action="index.php" method="post">
-			<input type="submit" id="cancel" name="cancel" value="Cancel">
-			</form>
+			<input type="submit" onclick="cancel()" id="cancel" name="cancel" value="Cancel">
 		</td>
 	</tr>
 	</table>
+
 </body>
+<script>
+	var shoppingCart = "<?php echo $_GET["shoppingcart"] ?>";
+	var username = "<?php echo $_GET["username"] ?>";
+	function cancel(){
+		window.location.href="screen2.php?shoppingCart="+shoppingCart+"&username="+username;
+	}
+</script>
 </HTML>
