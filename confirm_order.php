@@ -77,8 +77,8 @@
 			echo "<div id='bookdetails' style='overflow:scroll;height:180px;width:520px;border:1px solid black;'>";
 			echo "<table border='1'>";
 			echo "<th>Book Description</th><th>Qty</th><th>Price</th>";
-			echo "<tr><td>" . $shoppingcart[$i+1] . "</br><b>By</b> " . $shoppingcart[$i + 2] . "</br><b>Publisher:</b> TODO</td><td>" . $quantities[$i/4] .
-			"</td><td>" . ((float)$shoppingcart[$i+3]) * ((int) $quantities[$i/4]) . "</td></tr></table>";
+			echo "<tr><td>" . $shoppingcart[$i+1] . "</br><b>By</b> " . $shoppingcart[$i + 2] . "</br><b>Publisher:</b> TODO</td><td class='qty'>" . $quantities[$i/4] .
+			"</td><td class='price'>" . ((float)$shoppingcart[$i+3]) * ((int) $quantities[$i/4]) . "</td></tr></table>";
 		}
 
 	?>
@@ -93,7 +93,7 @@
 	</td>
 	<td align="right">
 	<div id="bookdetails" style="overflow:scroll;height:180px;width:260px;border:1px solid black;">
-		SubTotal:$12.99</br>Shipping_Handling:$2</br>_______</br>Total:$14.99	</div>
+		SubTotal:$<span id='subtotal'></span></br>Shipping_Handling: $<span id='shipping'></span></br>_______</br>Total:$<span id='total'></span>	</div>
 	</td>
 	</tr>
 	<tr>
@@ -119,5 +119,28 @@
 	function cancel(){
 		window.location.href="screen2.php?shoppingCart="+shoppingCart+"&username="+username;
 	}
+
+	function calculateTotal(){
+		var prices = document.getElementsByClassName('price')
+		var subTotal = 0;
+		for(price of prices) {
+			subTotal += parseFloat(price.innerHTML);
+		}
+		var shipping = calculateShipping();
+		var total = (subTotal + shipping).toFixed(2);
+		document.getElementById('subtotal').innerHTML=subTotal;
+		document.getElementById('shipping').innerHTML=shipping;
+		document.getElementById('total').innerHTML=total;
+	}
+
+	function calculateShipping(){
+		var qtys = document.getElementsByClassName('qty');
+		var total = 0
+		for(qty of qtys){
+			total += parseInt(qty.innerHTML);
+		}
+		return total * 2;
+	}
+	calculateTotal();
 </script>
 </HTML>
