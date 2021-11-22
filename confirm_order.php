@@ -77,7 +77,7 @@
 			echo "<div id='bookdetails' style='overflow:scroll;height:180px;width:520px;border:1px solid black;'>";
 			echo "<table border='1'>";
 			echo "<th>Book Description</th><th>Qty</th><th>Price</th>";
-			echo "<tr><td>" . $shoppingcart[$i+1] . "</br><b>By</b> " . $shoppingcart[$i + 2] . "</br><b>Publisher:</b> TODO</td><td class='qty'>" . $quantities[$i/4] .
+			echo "<tr><td>" . $shoppingcart[$i+1] . "</br><b>By</b> " . $shoppingcart[$i + 2] . "</br><b>Price: $</b>" . $shoppingcart[$i+3] . " </td><td class='qty'>" . $quantities[$i/4] .
 			"</td><td class='price'>" . ((float)$shoppingcart[$i+3]) * ((int) $quantities[$i/4]) . "</td></tr></table>";
 		}
 
