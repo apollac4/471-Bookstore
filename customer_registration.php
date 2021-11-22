@@ -29,10 +29,8 @@ if(isset($_POST['register_submit'])){
 		$ccnumber = mysqli_real_escape_string($db,$_POST['card_number']);
 		$expirationdate = mysqli_real_escape_string($db,$_POST['expiration']);
 
-
 		$insert = $db->query("INSERT INTO `customer` (`username`, `pin`, `fname`, `lname`, `address`, `city`, `state`, `zip`, `cccompany`, `ccnumber`, `ccexpiration`) VALUES ('$username', $pin, '$fname', '$lname', '$address', '$city', '$state', $zip, '$cctype', '$ccnumber', '$expirationdate');");
 
-		
 		if(!$insert)
 		{
 			echo "Problem inserting";
@@ -155,12 +153,19 @@ if(isset($_POST['register_submit'])){
 				<input type="submit" id="register_submit" name="register_submit" value="Register">
 			</td>
 			</form>
-			<form id="no_registration" action="index.php" method="post">
 			<td colspan="2" align="center">
-				<input type="submit" id="donotregister" name="donotregister" value="Don't Register">
+				<input type="submit" id="donotregister" name="donotregister" value="Don't Register" onclick="returnToSearch()">
 			</td>
-			</form>
 		</tr>
 	</table>
 </body>
+<script>
+var shoppingCart = "<?php echo $_GET["shoppingcart"]; ?>";
+var username = "<?php echo $_GET['username'] ?>";
+
+function returnToSearch(){
+	window.location.href="screen2.php?shoppingcart=" + shoppingCart+ "&username=" + username;
+}
+
+</script>
 </HTML>
