@@ -164,6 +164,7 @@ var shoppingCart = "<?php echo $_GET["shoppingcart"]; ?>";
 var username = "<?php echo $_GET['username'] ?>";
 
 function returnToSearch(){
+	alert("In order to proceed with the payment, you\n need to register first.");
 	window.location.href="screen2.php?shoppingcart=" + shoppingCart+ "&username=" + username;
 }
 
