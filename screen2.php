@@ -8,6 +8,7 @@
 	<?php
 	if(!array_key_exists("username",$_GET) and array_key_exists("username",$_REQUEST)){
 		$username = $_REQUEST['username'];
+		echo $username;
 		$pin = $_REQUEST['pin'];
 		$user = 'root';
 		$pass = '';
@@ -31,8 +32,7 @@
 				echo "Successfully logged in as " . $row["Username"];
 			}
 		}
-	} 
-	if(array_key_exists("username",$_GET)){
+	} else if(array_key_exists("username",$_GET)){
 		$username = $_GET['username']; 
 	} else {
 		$username = 'none';
@@ -71,7 +71,7 @@
 	</table>
 </body>
 <script>
-
+var username = "<?php echo $username ?>";
 var shoppingCart = "<?php if(array_key_exists('shoppingcart', $_GET))
 							{
 								echo $_GET['shoppingcart'];
@@ -84,8 +84,6 @@ function toResults(){
 	var searchfor = document.getElementById("searchfor").value;
 	var category = document.getElementById("category").value;
 	var searchon = document.getElementById("searchon").value;
-	var username = "<?php echo $username ?>";
-	
 	window.location.href="screen3.php?searchfor=" + searchfor + "&category=" + category 
 		+ "&searchon=" + searchon + "&shoppingcart=" + shoppingCart + "&username=" + username;
 }

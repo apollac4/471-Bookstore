@@ -109,7 +109,11 @@ function toCheckout(){
 		quantities += quantityWeb[i].value+",";
 	}
 
-	window.location.href="confirm_order.php?shoppingcart=" + shoppingCart + "&quantities=" + quantities+ "&username=" + username;
+	if(username == 'none'){//User needs to register
+		window.location.href="customer_registration.php?shoppingcart=" + shoppingCart + "&quantities=" + quantities+ "&username=" + username;
+	} else {//User is logged in 
+		window.location.href="confirm_order.php?shoppingcart=" + shoppingCart + "&quantities=" + quantities+ "&username=" + username;
+	}
 }
 
 function newSearch(){
