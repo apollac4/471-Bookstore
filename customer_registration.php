@@ -1,4 +1,3 @@
-<script>alert('Please enter all values')</script><!-- UI: Prithviraj Narahari, php code: Alexander Martens -->
 <head>
 <title> CUSTOMER REGISTRATION </title>
 </head>
@@ -10,14 +9,14 @@ $db = 'bookstore471';
 $db = new mysqli('localhost', $user, $pass, $db) or die("Unable to connect");
 
 if (mysqli_connect_errno()) echo "not connected! ".$db->error;
-
+$registered = "No";
 if(isset($_POST['register_submit'])){
-	//Check if user exists
 	$username =  mysqli_real_escape_string($db,$_POST['username']);
 	$que = "SELECT * FROM customer WHERE username = '". $username ."'";
 
 	$res = mysqli_query($db, $que);
-	if($res!=null){
+
+	if(mysqli_num_rows($res)==0){//Username does not exist in the DB
 		$pin = mysqli_real_escape_string($db,$_POST['pin']);
 		$fname = mysqli_real_escape_string($db,$_POST['firstname']);
 		$lname = mysqli_real_escape_string($db,$_POST['lastname']);
@@ -39,13 +38,15 @@ if(isset($_POST['register_submit'])){
 		else
 		{
 			echo "Records added successfully.";
+			$registered = "Yes";
+			echo $username;
 		}
 	} else {
 		echo "User already exists.  Please enter a valid username";
 	}
 }
 	mysqli_close($db);
-
+	
 ?>
 
 <body>
@@ -161,7 +162,13 @@ if(isset($_POST['register_submit'])){
 </body>
 <script>
 var shoppingCart = "<?php echo $_GET["shoppingcart"]; ?>";
-var username = "<?php echo $_GET['username'] ?>";
+var username = "<?php echo $_GET['username'] ?>"; 
+var registered = "<?php echo $registered ?>";
+var quantity = "<?php echo $_GET["quantities"] ?>";
+
+if(registered == "Yes"){
+	window.location.href="confirm_order.php?shoppingcart=" + shoppingCart+ "&username=" + "<?php echo $username ?>" + "&quantities=" + quantity;
+}
 
 function returnToSearch(){
 	alert("In order to proceed with the payment, you\n need to register first.");
