@@ -102,9 +102,7 @@
 		</td>
 		</form>
 		<td align="right">
-			<form id="update" action="update_customerprofile.php" method="post">
-			<input type="submit" id="update_customerprofile" name="update_customerprofile" value="Update Customer Profile">
-			</form>
+			<input onclick="updateProfile()" type="submit" id="update_customerprofile" name="update_customerprofile" value="Update Customer Profile">
 		</td>
 		<td align="left">
 			<input type="submit" onclick="cancel()" id="cancel" name="cancel" value="Cancel">
@@ -116,6 +114,11 @@
 <script>
 	var shoppingCart = "<?php echo $_GET["shoppingcart"] ?>";
 	var username = "<?php echo $_GET["username"] ?>";
+
+	function updateProfile(){
+		window.location.href="update_customerprofile.php?shoppingcart="+shoppingCart+"&username="+username;
+	}
+
 	function cancel(){
 		window.location.href="screen2.php?shoppingcart="+shoppingCart+"&username="+username;
 	}

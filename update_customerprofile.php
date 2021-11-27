@@ -1,5 +1,40 @@
-<script>alert('Please enter all values')</script><!DOCTYPE HTML>
 <head>
+	<?php 
+		if(isset($_POST['update_submit'])){
+		
+		$username = $_GET['username'];
+		$pin = $_POST['new_pin'];
+		$firstName = $_POST['firstname'];
+		$lastName = $_POST['lastname'];
+		$address = $_POST['address'];
+		$city = $_POST['city'];
+		$zip = $_POST['zip'];
+		$cardNum = $_POST['card_number'];
+		$exp = $_POST['expiration_date'];
+
+		$user = 'root';
+		$pass = '';
+		$db = 'bookstore471';
+		$db = new mysqli('localhost', $user, $pass, $db) or die("Unable to connect");
+
+		if (mysqli_connect_errno()) {
+			echo "not connected! ".$db->error;
+			echo $db->error;
+		}
+
+		$query = "UPDATE customer SET Fname = '$firstName', Lname = '$lastName', PIN = '$pin', Address = '$address', 
+					City = '$city', Zip = '$zip', CCNumber = '$cardNum', CCExpiration='$exp' WHERE Username='$username'";
+		$result = mysqli_query($db, $query);
+		$updated = 1;
+		} else {
+			$updated = 0;
+		}
+		if(isset($_POST['cancel_submit'])){
+			$back = 1;
+		} else {
+			$back = 0;
+		}
+	?>
 <title>UPDATE CUSTOMER PROFILE</title>
 
 </head>
@@ -8,7 +43,7 @@
 	<table align="center" style="border:2px solid blue;">
 		<tr>
 			<td align="right">
-				Username: 
+				<?php echo "Username: " . $_GET['username'] ?>
 			</td>
 			<td colspan="3" align="center">
 							</td>
@@ -18,7 +53,7 @@
 				New PIN<span style="color:red">*</span>:
 			</td>
 			<td>
-				<input type="text" id="new_pin" name="new_pin">
+				<input type="text" id="new_pin" name="new_pin" label="123">
 			</td>
 			<td align="right">
 				Re-type New PIN<span style="color:red">*</span>:
@@ -102,17 +137,32 @@
 				<input type="text" id="expiration_date" name="expiration_date" placeholder="MM/YY">
 			</td>
 		</tr>
+	
 		<tr>
 			<td align="right" colspan="2">
 				<input type="submit" id="update_submit" name="update_submit" value="Update">
 			</td>
-			</form>
-		<form id="cancel" action="index.php" method="post">	
 			<td align="left" colspan="2">
 				<input type="submit" id="cancel_submit" name="cancel_submit" value="Cancel">
 			</td>
 		</tr>
+		
 	</table>
 	</form>
 </body>
+<script>
+	var shoppingCart = "<?php echo $_GET["shoppingcart"] ?>";
+	var username = "<?php echo $_GET["username"] ?>";
+	var updated = "<?php echo $updated ?>"
+	var back = "<?php echo $back ?>"
+
+	function previous(){
+		window.location.href="confirm_order.php?shoppingcart="+shoppingCart+"&username="+username;
+	}
+
+	if(updated == 1  || back == 1){
+		previous();	
+	}
+
+</script>
 </html>

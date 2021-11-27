@@ -8,7 +8,7 @@
 	<?php
 	if(!array_key_exists("username",$_GET) and array_key_exists("username",$_REQUEST)){
 		$username = $_REQUEST['username'];
-		echo $username;
+
 		$pin = $_REQUEST['pin'];
 		$user = 'root';
 		$pass = '';
