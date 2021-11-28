@@ -153,11 +153,12 @@
 <script>
 	var shoppingCart = "<?php echo $_GET["shoppingcart"] ?>";
 	var username = "<?php echo $_GET["username"] ?>";
+	var quantities = "<?php echo $_GET["quantities"] ?>";
 	var updated = "<?php echo $updated ?>"
 	var back = "<?php echo $back ?>"
 
 	function previous(){
-		window.location.href="confirm_order.php?shoppingcart="+shoppingCart+"&username="+username;
+		window.location.href="confirm_order.php?shoppingcart="+shoppingCart+"&username="+username+"&quantities="+quantities;
 	}
 
 	if(updated == 1  || back == 1){

@@ -114,9 +114,10 @@
 <script>
 	var shoppingCart = "<?php echo $_GET["shoppingcart"] ?>";
 	var username = "<?php echo $_GET["username"] ?>";
+	var quantities = "<?php echo $_GET["quantities"] ?>";
 
 	function updateProfile(){
-		window.location.href="update_customerprofile.php?shoppingcart="+shoppingCart+"&username="+username;
+		window.location.href="update_customerprofile.php?shoppingcart="+shoppingCart+"&username="+username+"&quantities="+quantities;
 	}
 
 	function cancel(){
