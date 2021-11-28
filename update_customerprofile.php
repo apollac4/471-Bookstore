@@ -1,38 +1,48 @@
 <head>
 	<?php 
-		if(isset($_POST['update_submit'])){
-		
-		$username = $_GET['username'];
-		$pin = $_POST['new_pin'];
-		$firstName = $_POST['firstname'];
-		$lastName = $_POST['lastname'];
-		$address = $_POST['address'];
-		$city = $_POST['city'];
-		$zip = $_POST['zip'];
-		$cardNum = $_POST['card_number'];
-		$exp = $_POST['expiration_date'];
-
 		$user = 'root';
 		$pass = '';
 		$db = 'bookstore471';
 		$db = new mysqli('localhost', $user, $pass, $db) or die("Unable to connect");
-
+		$username = $_GET['username'];
+		$row = null;
 		if (mysqli_connect_errno()) {
 			echo "not connected! ".$db->error;
 			echo $db->error;
 		}
 
-		$query = "UPDATE customer SET Fname = '$firstName', Lname = '$lastName', PIN = '$pin', Address = '$address', 
-					City = '$city', Zip = '$zip', CCNumber = '$cardNum', CCExpiration='$exp' WHERE Username='$username'";
-		$result = mysqli_query($db, $query);
-		$updated = 1;
+		if(isset($_POST['update_submit'])){
+			$pin = $_POST['new_pin'];
+			$firstName = $_POST['firstname'];
+			$lastName = $_POST['lastname'];
+			$state= $_POST['state'];
+			$address = $_POST['address'];
+			$city = $_POST['city'];
+			$zip = $_POST['zip'];
+			$cardNum = $_POST['card_number'];
+			$cardType = $_POST['credit_card'];
+			$exp = $_POST['expiration_date'];
+
+			$query = "UPDATE customer SET Fname = '$firstName', Lname = '$lastName', PIN = '$pin', Address = '$address', 
+						City = '$city', Zip = '$zip', CCNumber = '$cardNum', CCExpiration='$exp', CCCompany = '$cardType', State = '$state' WHERE Username='$username'";
+			$result = mysqli_query($db, $query);
+			$updated = 1;
 		} else {
 			$updated = 0;
 		}
-		if(isset($_POST['cancel_submit'])){
+		if(isset($_POST['cancel_submit'])){//Return to confirm order page with existing values
 			$back = 1;
 		} else {
 			$back = 0;
+		}
+		if($updated == 0 && $back == 0){//perform query to retrieve customer profile values
+			$query = "SELECT * FROM customer WHERE Username='$username'";
+
+			$result = mysqli_query($db, $query);	
+
+			if ($result != null and $result->num_rows > 0) {
+				$row = mysqli_fetch_assoc($result);
+			}
 		}
 	?>
 <title>UPDATE CUSTOMER PROFILE</title>
@@ -53,13 +63,13 @@
 				New PIN<span style="color:red">*</span>:
 			</td>
 			<td>
-				<input type="text" id="new_pin" name="new_pin" label="123">
+				<?php if($row != null) echo "<input type='text' id='new_pin' name='new_pin' value='" . $row['PIN'] . "'>" ?>
 			</td>
 			<td align="right">
 				Re-type New PIN<span style="color:red">*</span>:
 			</td>
 			<td>
-				<input type="text" id="retypenew_pin" name="retypenew_pin">
+				<?php if($row != null) echo "<input type='text' id='retypenew_pin' name='retypenew_pin' value='" . $row['PIN'] . "'>" ?>
 			</td>
 		</tr>
 		<tr>
@@ -67,7 +77,7 @@
 				First Name<span style="color:red">*</span>:
 			</td>
 			<td colspan="3">
-				<input type="text" id="firstname" name="firstname">
+				<?php if($row != null) echo "<input type='text' id='firstname' name='firstname' value='" . $row['Fname'] . "'>" ?>
 			</td>
 		</tr>
 		<tr>
@@ -75,7 +85,7 @@
 				Last Name<span style="color:red">*</span>:
 			</td>
 			<td colspan="3">
-				<input type="text" id="lastname" name="lastname">
+				<?php if($row != null) echo "<input type='text' id='lastname' name='lastname' value='" . $row['Lname'] . "'>" ?>
 			</td>
 		</tr>
 		<tr>
@@ -83,7 +93,7 @@
 				Address<span style="color:red">*</span>:
 			</td>
 			<td colspan="3">
-				<input type="text" id="address" name="address">
+				<?php if($row != null) echo "<input type='text' id='address' name='address' value='" . $row['Address'] . "'>" ?>
 			</td>
 		</tr>
 		<tr>
@@ -91,7 +101,7 @@
 				City<span style="color:red">*</span>:
 			</td>
 			<td colspan="3">
-				<input type="text" id="city" name="city">
+				<?php if($row != null) echo "<input type='text' id='city' name='city' value='" . $row['City'] . "'>" ?>
 			</td>
 		</tr>
 		<tr>
@@ -100,7 +110,7 @@
 			</td>
 			<td>
 				<select id="state" name="state">
-				<option selected disabled>select a state</option>
+				<?php if($row != null) echo "<option selected disabled>" . $row['State'] . "</option>" ?>
 				<option>Michigan</option>
 				<option>California</option>
 				<option>Tennessee</option>
@@ -110,7 +120,7 @@
 				Zip<span style="color:red">*</span>:
 			</td>
 			<td>
-				<input type="text" id="zip" name="zip">
+				<?php if($row != null) echo "<input type='text' id='zip' name='zip' value='" . $row['Zip'] . "'>" ?>
 			</td>
 		</tr>
 		<tr>
@@ -119,14 +129,14 @@
 			</td>
 			<td>
 				<select id="credit_card" name="credit_card">
-				<option selected disabled>select a card type</option>
+				<?php if($row != null) echo "<option selected disabled>" . $row['CCCompany'] . "</option>" ?>
 				<option>VISA</option>
 				<option>MASTER</option>
 				<option>DISCOVER</option>
 				</select>
 			</td>
 			<td align="left" colspan="2">
-				<input type="text" id="card_number" name="card_number" placeholder="Credit card number">
+				<?php if($row != null) echo "<input type='text' id='card_number' name='card_number' value='" . $row['CCNumber'] . "'>" ?>
 			</td>
 		</tr>
 		<tr>
@@ -134,7 +144,7 @@
 				Expiration Date<span style="color:red">*</span>:
 			</td>
 			<td colspan="2" align="left">
-				<input type="text" id="expiration_date" name="expiration_date" placeholder="MM/YY">
+				<?php if($row != null) echo "<input type='text' id='expiration_date' name='expiration_date' value='" . $row['CCExpiration'] . "'>" ?>
 			</td>
 		</tr>
 	
