@@ -24,7 +24,6 @@
 
 	?>
 	<table align="center" style="border:2px solid blue;">
-	<form id="buy" action="proof_purchase.php" method="post">
 	<tr>
 	<td>
 	Shipping Address:
@@ -98,9 +97,8 @@
 	</tr>
 	<tr>
 		<td align="right">
-			<input type="submit" id="buyit" name="btnbuyit" value="BUY IT!">
+			<input onclick="buyIt()" type="submit" id="buyit" name="btnbuyit" value="BUY IT!">
 		</td>
-		</form>
 		<td align="right">
 			<input onclick="updateProfile()" type="submit" id="update_customerprofile" name="update_customerprofile" value="Update Customer Profile">
 		</td>
@@ -115,7 +113,6 @@
 	var shoppingCart = "<?php echo $_GET["shoppingcart"] ?>";
 	var username = "<?php echo $_GET["username"] ?>";
 	var quantities = "<?php echo $_GET["quantities"] ?>";
-
 	function updateProfile(){
 		window.location.href="update_customerprofile.php?shoppingcart="+shoppingCart+"&username="+username+"&quantities="+quantities;
 	}
@@ -146,5 +143,14 @@
 		return total * 2;
 	}
 	calculateTotal();
+	var total = document.getElementById('total').innerHTML;
+	var shipping = document.getElementById('shipping').innerHTML;
+	var subTotal = document.getElementById('subtotal').innerHTML;
+
+	function buyIt(){
+		window.location.href="proof_purchase.php?shoppingcart="+shoppingCart+"&username="+username+"&quantities="+quantities+
+		"&total="+total+"&shipping="+shipping+"&subtotal="+subTotal;
+	}
+
 </script>
 </HTML>
