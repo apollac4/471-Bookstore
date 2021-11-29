@@ -167,7 +167,7 @@ var registered = "<?php echo $registered ?>";
 var quantity = "<?php echo $_GET["quantities"] ?>";
 
 if(registered == "Yes"){
-	window.location.href="confirm_order.php?shoppingcart=" + shoppingCart+ "&username=" + "<?php echo $username ?>" + "&quantities=" + quantity;
+	window.location.href="confirm_order.php?shoppingcart=" + shoppingCart+ "&username=" + username + "&quantities=" + quantity;
 }
 
 function returnToSearch(){
