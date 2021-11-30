@@ -93,9 +93,7 @@
 		</td>
 		</form>
 		<td align="right">
-			<form id="update" action="screen2.php" method="post">
-			<input type="submit" id="update_customerprofile" name="update_customerprofile" value="New Search">
-			</form>
+			<input onclick=newSearch() type="submit" id="update_customerprofile" name="update_customerprofile" value="New Search">
 		</td>
 		<td align="left">
 			<form id="cancel" action="index.php" method="post">
@@ -105,4 +103,10 @@
 	</tr>
 	</table>
 </body>
+<script>
+	var username = "<?php echo $_GET['username'] ?>";
+	function newSearch(){
+		window.location.href="screen2.php?username=" + username;
+	}
+</script>
 </HTML>
