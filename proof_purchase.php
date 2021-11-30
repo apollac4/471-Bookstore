@@ -22,6 +22,47 @@
 		
 		$res = mysqli_query($db, $que);
 
+		//Get values from URL to use on the rest of the page
+		$url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		$url_components = parse_url($url);
+		parse_str($url_components['query'], $params);
+		$book1 = $params['shoppingcart'];
+		$shoppingcart = (explode(",",$book1));
+		$quantities = $params['quantities'];
+		$quantities = (explode(",",$quantities));
+
+		//Create order in database
+		$newPurchaseId = rand(0, 1000000000);
+		$purchaseName = mysqli_real_escape_string($db,$_GET['username']);
+		$purhchaseTotal = mysqli_real_escape_string($db,$params['total']);
+		$purchaseDate = mysqli_real_escape_string($db,date("m/d/y"));
+		$purchaseTime = mysqli_real_escape_string($db,date("H:i:s"));
+		$que ="INSERT INTO purchase VALUES ($newPurchaseId, '$purchaseName', $purhchaseTotal, '$purchaseDate', '$purchaseTime');";
+
+		$insertPurchaseResult = mysqli_query($db, $que);
+		if($insertPurchaseResult){
+			echo "Order created successfully.";
+		} else {
+			echo "Something went wrong with purchase table.";
+			echo mysqli_error($db);
+		}
+
+		//Insert into holds table for each book purchased
+		for($i = 0; $i < count($shoppingcart); $i+=4){
+			$holdsISBN = mysqli_real_escape_string($db, $shoppingcart[$i]);
+			$holdsQty = mysqli_real_escape_string($db, $quantities[$i/4]);
+			$que ="INSERT INTO holds VALUES ($newPurchaseId, $holdsQty, '$holdsISBN', '$purchaseName');";
+
+			$insertHoldsResult = mysqli_query($db, $que);
+			if($insertHoldsResult){
+				echo "Insert into holds successfull.";
+			} else {
+				echo "Something went wrong with holds table.";
+				echo mysqli_error($db);
+			}
+		}
+
+
 	?>
 	<table align="center" style="border:2px solid blue;">
 	<form id="buy" action="" method="post">
@@ -56,13 +97,6 @@
 	<tr>
 	<td colspan="3" align="center">
 	<?php 
-		$url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-		$url_components = parse_url($url);
-		parse_str($url_components['query'], $params);
-		$book1 = $params['shoppingcart'];
-		$shoppingcart = (explode(",",$book1));
-		$quantities = $params['quantities'];
-		$quantities = (explode(",",$quantities));
 
 		for($i = 0; $i < count($shoppingcart); $i+=4){
 			echo "<div id='bookdetails' style='overflow:scroll;height:180px;width:520px;border:1px solid black;'>";
