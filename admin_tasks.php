@@ -60,33 +60,89 @@
 				// DATES
 
 				echo "<br><br>";
-				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE 'Date' LIKE '01%'";
+				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE Date LIKE '01%'";
 				$result = mysqli_query($db, $query);
 				$num_rows = mysqli_num_rows($result);
 				for ($i = 0; $i < $num_rows; $i++) {
 					$row = mysqli_fetch_assoc($result);
-					echo "<h1>The average money spent this year in January on books is " . $row['average'] . "</h1>";
+					echo "<h1>The average money spent this year in January on books is $" . $row['average']  . "</h1>";
 				}
-				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE 'Date' LIKE '02%'";
+				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE Date LIKE '02%'";
 				$result = mysqli_query($db, $query);
 				$num_rows = mysqli_num_rows($result);
 				for ($i = 0; $i < $num_rows; $i++) {
 					$row = mysqli_fetch_assoc($result);
-					echo "<h1>The average money spent this year in February on books is " . $row['average'] . "</h1>";
+					echo "<h1>The average money spent this year in February on books is $" . $row['average'] . "</h1>";
 				}
-				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE 'Date' LIKE '11%'";
+				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE Date LIKE '03%'";
 				$result = mysqli_query($db, $query);
 				$num_rows = mysqli_num_rows($result);
 				for ($i = 0; $i < $num_rows; $i++) {
 					$row = mysqli_fetch_assoc($result);
-					echo "<h1>The average money spent this year in November on books is " . $row['average'] . "</h1>";
+					echo "<h1>The average money spent this year in March on books is $" . $row['average'] . "</h1>";
 				}
-				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE 'Date' LIKE '12%'";
+				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE Date LIKE '04%'";
 				$result = mysqli_query($db, $query);
 				$num_rows = mysqli_num_rows($result);
 				for ($i = 0; $i < $num_rows; $i++) {
 					$row = mysqli_fetch_assoc($result);
-					echo "<h1>The average money spent this year in December on books is " . $row['average'] . "</h1>";
+					echo "<h1>The average money spent this year in April on books is $" . $row['average'] . "</h1>";
+				}
+				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE Date LIKE '05%'";
+				$result = mysqli_query($db, $query);
+				$num_rows = mysqli_num_rows($result);
+				for ($i = 0; $i < $num_rows; $i++) {
+					$row = mysqli_fetch_assoc($result);
+					echo "<h1>The average money spent this year in May on books is $" . $row['average'] . "</h1>";
+				}
+				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE Date LIKE '06%'";
+				$result = mysqli_query($db, $query);
+				$num_rows = mysqli_num_rows($result);
+				for ($i = 0; $i < $num_rows; $i++) {
+					$row = mysqli_fetch_assoc($result);
+					echo "<h1>The average money spent this year in June on books is $" . $row['average'] . "</h1>";
+				}
+				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE Date LIKE '07%'";
+				$result = mysqli_query($db, $query);
+				$num_rows = mysqli_num_rows($result);
+				for ($i = 0; $i < $num_rows; $i++) {
+					$row = mysqli_fetch_assoc($result);
+					echo "<h1>The average money spent this year in July on books is $" . $row['average'] . "</h1>";
+				}
+				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE Date LIKE '08%'";
+				$result = mysqli_query($db, $query);
+				$num_rows = mysqli_num_rows($result);
+				for ($i = 0; $i < $num_rows; $i++) {
+					$row = mysqli_fetch_assoc($result);
+					echo "<h1>The average money spent this year in August on books is $" . $row['average'] . "</h1>";
+				}
+				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE Date LIKE '09%'";
+				$result = mysqli_query($db, $query);
+				$num_rows = mysqli_num_rows($result);
+				for ($i = 0; $i < $num_rows; $i++) {
+					$row = mysqli_fetch_assoc($result);
+					echo "<h1>The average money spent this year in September on books is $" . $row['average'] . "</h1>";
+				}
+				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE Date LIKE '10%'";
+				$result = mysqli_query($db, $query);
+				$num_rows = mysqli_num_rows($result);
+				for ($i = 0; $i < $num_rows; $i++) {
+					$row = mysqli_fetch_assoc($result);
+					echo "<h1>The average money spent this year in October on books is $" . $row['average'] . "</h1>";
+				}
+				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE Date LIKE '11%'";
+				$result = mysqli_query($db, $query);
+				$num_rows = mysqli_num_rows($result);
+				for ($i = 0; $i < $num_rows; $i++) {
+					$row = mysqli_fetch_assoc($result);
+					echo "<h1>The average money spent this year in November on books is $" . $row['average'] . "</h1>";
+				}
+				$query = "SELECT AVG(Total) AS 'average' FROM purchase WHERE Date LIKE '12%'";
+				$result = mysqli_query($db, $query);
+				$num_rows = mysqli_num_rows($result);
+				for ($i = 0; $i < $num_rows; $i++) {
+					$row = mysqli_fetch_assoc($result);
+					echo "<h1>The average money spent this year in December on books is $" . $row['average'] . "</h1>";
 				}
 
 				// WORKS WITHOUT LIKE
