@@ -18,11 +18,28 @@
 		echo $db->error;
 		}
 		$username = $_GET['username'];
+
+		//Check if a new card was entered
+		if(isset($_GET['type'])){
+			$cardNum = mysqli_real_escape_string($db,$_GET['card_num']);
+			$type = mysqli_real_escape_string($db,$_GET['type']);
+			$exp = mysqli_real_escape_string($db,$_GET['exp']);
+			$que ="UPDATE customer SET CCNumber='$cardNum', CCCompany='$type', CCExpiration='$exp' WHERE username = '$username'";
+		
+			$updateCardResult = mysqli_query($db, $que);
+			if($updateCardResult){
+				echo "Card updated successfully.";
+			} else {
+				echo "Something went wrong with card update.";
+				echo mysqli_error($db);
+			}
+		}
+
+		//Get values from URL to use on the rest of the page
 		$que = "SELECT * FROM customer WHERE username = '$username'";
 		
 		$res = mysqli_query($db, $que);
 
-		//Get values from URL to use on the rest of the page
 		$url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 		$url_components = parse_url($url);
 		parse_str($url_components['query'], $params);
@@ -55,7 +72,7 @@
 
 			$insertHoldsResult = mysqli_query($db, $que);
 			if($insertHoldsResult){
-				echo "Insert into holds successfull.";
+				echo "Insert into holds successful.";
 			} else {
 				echo "Something went wrong with holds table.";
 				echo mysqli_error($db);

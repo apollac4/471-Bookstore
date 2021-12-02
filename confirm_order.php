@@ -37,7 +37,7 @@
 			echo '<input type="radio" name="cardgroup" value="profile_card" checked>Use Credit card on file<br />' . $row['CCCompany'] . " - " . $row['CCNumber'] . " - " . $row['CCExpiration']."<br />";
 	}
 	?>
-			<input type="radio" name="cardgroup" value="new_card">New Credit Card<br />
+			<input id="newcard" type="radio" name="cardgroup" value="new_card">New Credit Card<br />
 					<select id="credit_card" name="credit_card">
 						<option selected disabled>select a card type</option>
 						<option>VISA</option>
@@ -113,6 +113,7 @@
 	var shoppingCart = "<?php echo $_GET["shoppingcart"] ?>";
 	var username = "<?php echo $_GET["username"] ?>";
 	var quantities = "<?php echo $_GET["quantities"] ?>";
+
 	function updateProfile(){
 		window.location.href="update_customerprofile.php?shoppingcart="+shoppingCart+"&username="+username+"&quantities="+quantities;
 	}
@@ -148,8 +149,17 @@
 	var subTotal = document.getElementById('subtotal').innerHTML;
 
 	function buyIt(){
-		window.location.href="proof_purchase.php?shoppingcart="+shoppingCart+"&username="+username+"&quantities="+quantities+
-		"&total="+total+"&shipping="+shipping+"&subtotal="+subTotal;
+		if(document.getElementById("newcard").checked == true){
+			let type = document.getElementById("credit_card").value;
+			let cNum = document.getElementById("card_number").value;
+			let exp = document.getElementById("card_expiration").value;
+			window.location.href="proof_purchase.php?shoppingcart="+shoppingCart+"&username="+username+"&quantities="+quantities+
+			"&total="+total+"&shipping="+shipping+"&subtotal="+subTotal+"&type="+type+"&card_num="+cNum+"&exp="+exp;
+		} else {
+			window.location.href="proof_purchase.php?shoppingcart="+shoppingCart+"&username="+username+"&quantities="+quantities+
+			"&total="+total+"&shipping="+shipping+"&subtotal="+subTotal;
+		}
+
 	}
 
 </script>
