@@ -130,7 +130,7 @@
 		}
 		var shipping = calculateShipping();
 		var total = (subTotal + shipping).toFixed(2);
-		document.getElementById('subtotal').innerHTML=subTotal;
+		document.getElementById('subtotal').innerHTML=subTotal.toFixed(2);
 		document.getElementById('shipping').innerHTML=shipping;
 		document.getElementById('total').innerHTML=total;
 	}
