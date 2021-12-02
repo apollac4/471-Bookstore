@@ -145,23 +145,15 @@
 					echo "<h1>The average money spent this year in December on books is $" . $row['average'] . "</h1>";
 				}
 
-				// WORKS WITHOUT LIKE
 
-				// $query = "SELECT AVG(Total) AS 'average' FROM purchase";
-				// $result = mysqli_query($db, $query);
-				// $num_rows = mysqli_num_rows($result);
-				// for ($i = 0; $i < $num_rows; $i++) {
-				// 	$row = mysqli_fetch_assoc($result);
-				// 	echo "<h1>The average money spent this year in December on books is " . $row['average'] . "</h1>";
-				// }
-
-				//BUG WHERE ONLY GRABS FIRST BOOK THEN COUNTS EVERY REVIEW FOR THAT FIRST BOOK INSTEAD OF MATCHING ISBN
-				$query = "SELECT book.Title, COUNT(review.ID) FROM book INNER JOIN review ON book.ISBN=review.ISBN;";
+				$query = "SELECT book.Title, COUNT(review.ISBN)
+				FROM book JOIN review ON book.ISBN = review.ISBN
+				GROUP BY book.Title";
 				$result = mysqli_query($db, $query);
 				$num_rows = mysqli_num_rows($result);
 				for ($i = 0; $i < $num_rows; $i++) {
 					$row = mysqli_fetch_assoc($result);
-					echo "<br><br><h1>There are currently " . $row['COUNT(review.ID)'] . " reviews for " . $row['Title'] . "</h1>";
+					echo "<br><br><h1>There are currently " . $row['COUNT(review.ISBN)'] . " review(s) for " . $row['Title'] . "</h1>";
 				}
 				}
 				
