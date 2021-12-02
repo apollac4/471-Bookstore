@@ -78,8 +78,6 @@
 				echo mysqli_error($db);
 			}
 		}
-
-
 	?>
 	<table align="center" style="border:2px solid blue;">
 	<form id="buy" action="" method="post">
@@ -112,18 +110,18 @@
 	</tr>'
 	?>
 	<tr>
-	<td colspan="3" align="center">
-	<?php 
+	<td colspan="3" align="center">	
+		<?php 
 
-		for($i = 0; $i < count($shoppingcart); $i+=4){
-			echo "<div id='bookdetails' style='overflow:scroll;height:180px;width:520px;border:1px solid black;'>";
-			echo "<table border='1'>";
-			echo "<th>Book Description</th><th>Qty</th><th>Price</th>";
-			echo "<tr><td>" . $shoppingcart[$i+1] . "</br><b>By</b> " . $shoppingcart[$i + 2] . "</br><b>Price: $</b>" . $shoppingcart[$i+3] . " </td><td class='qty'>" . $quantities[$i/4] .
-			"</td><td class='price'>" . ((float)$shoppingcart[$i+3]) * ((int) $quantities[$i/4]) . "</td></tr></table>";
-		}
+			for($i = 0; $i < count($shoppingcart); $i+=4){
+				echo "<div id='bookdetails' style='overflow:scroll;height:180px;width:520px;border:1px solid black;'>";
+				echo "<table border='1'>";
+				echo "<th>Book Description</th><th>Qty</th><th>Price</th>";
+				echo "<tr><td>" . $shoppingcart[$i+1] . "</br><b>By</b> " . $shoppingcart[$i + 2] . "</br><b>Price: $</b>" . $shoppingcart[$i+3] . " </td><td class='qty'>" . $quantities[$i/4] .
+				"</td><td class='price'>" . ((float)$shoppingcart[$i+3]) * ((int) $quantities[$i/4]) . "</td></tr></table>";
+			}
 
-	?>
+		?>
 	</td>
 	</tr>
 	<tr>
@@ -140,7 +138,7 @@
 	</tr>
 	<tr>
 		<td align="right">
-			<input type="submit" id="buyit" name="btnbuyit" value="Print" disabled>
+			<input type="submit" id="buyit" name="btnbuyit" value="Print" onclick="printPage()">
 		</td>
 		</form>
 		<td align="right">
@@ -158,6 +156,10 @@
 	var username = "<?php echo $_GET['username'] ?>";
 	function newSearch(){
 		window.location.href="screen2.php?username=" + username;
+	}
+
+	function printPage(){
+     	window.print();
 	}
 </script>
 </HTML>
